@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-12-31
+
+## Features
+
+* Add `waitForTransaction` which awaits the transaction generation process.
+
 ## 2025-11-26
 
 ### Changes
