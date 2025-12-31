@@ -1,8 +1,8 @@
-import type { InputNoteState, NoteType } from "@demox-labs/miden-sdk";
+import type { InputNoteState, Note, NoteType } from "@demox-labs/miden-sdk";
 
 export enum WalletAdapterNetwork {
-  Testnet = 'testnet',
-  Localnet = 'localnet',
+  Testnet = "testnet",
+  Localnet = "localnet",
 }
 
 export type SupportedTransactionVersions = ReadonlySet<any> | null;
@@ -12,8 +12,8 @@ export type TransactionOrVersionedTransaction<
 > = S extends null ? any : any | any;
 
 export enum PrivateDataPermission {
-  UponRequest = 'UPON_REQUEST', // The App must ask for permission to access private data every time
-  Auto = 'AUTO', // The App can access private data without confirmation
+  UponRequest = "UPON_REQUEST", // The App must ask for permission to access private data every time
+  Auto = "AUTO", // The App can access private data without confirmation
 }
 
 export enum AllowedPrivateData {
@@ -21,7 +21,7 @@ export enum AllowedPrivateData {
   Assets = 1 << 0, // 1
   Notes = 1 << 1, // 2
   Storage = 1 << 2, // 4
-  All = (1 << 16) - 1 // 65535 (allows for new permissions without requiring a migration)
+  All = (1 << 16) - 1, // 65535 (allows for new permissions without requiring a migration)
 }
 
 export type SignKind = "word" | "signingInputs";
@@ -44,3 +44,24 @@ export type FungibleAssetDetails = {
   amount: string;
   faucetId: string;
 };
+
+// The dev facing transaction output interface
+// if we get an error from the wallet we throw it as an exception
+export interface TransactionOutput {
+  txHash: string;
+  outputNotes: Note[];
+}
+
+export interface IFailedTransactionOutput {
+  errorMessage: string;
+}
+
+// Wallet gives Uint8Array but for devs we expose the Note instead
+export interface WalletTransactionSuccessOuput {
+  txHash: string;
+  outputNotes: string[];
+}
+
+export type WalletTransactionOutput =
+  | WalletTransactionSuccessOuput
+  | IFailedTransactionOutput;

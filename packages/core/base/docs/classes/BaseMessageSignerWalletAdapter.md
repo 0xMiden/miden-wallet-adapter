@@ -638,6 +638,10 @@ Remove the listeners of a given event.
 
 `Promise`\<`string`\>
 
+#### Implementation of
+
+`MessageSignerWalletAdapter.requestConsume`
+
 ***
 
 ### requestPrivateNotes()
@@ -677,6 +681,10 @@ Remove the listeners of a given event.
 #### Returns
 
 `Promise`\<`string`\>
+
+#### Implementation of
+
+`MessageSignerWalletAdapter.requestSend`
 
 ***
 
@@ -721,3 +729,27 @@ Remove the listeners of a given event.
 #### Implementation of
 
 `MessageSignerWalletAdapter.signBytes`
+
+***
+
+### waitForTransaction()
+
+> `abstract` **waitForTransaction**(`txId`, `timeout?`): `Promise`\<[`TransactionOutput`](../interfaces/TransactionOutput.md)\>
+
+#### Parameters
+
+##### txId
+
+`string`
+
+##### timeout?
+
+`number`
+
+#### Returns
+
+`Promise`\<[`TransactionOutput`](../interfaces/TransactionOutput.md)\>
+
+#### Implementation of
+
+`MessageSignerWalletAdapter.waitForTransaction`
