@@ -1,12 +1,12 @@
-import type { NoteFilterTypes } from "@demox-labs/miden-sdk";
-import type { WalletAdapter, WalletAdapterProps } from "./adapter";
-import { BaseWalletAdapter } from "./adapter";
+import type { NoteFilterTypes } from '@demox-labs/miden-sdk';
+import type { WalletAdapter, WalletAdapterProps } from './adapter';
+import { BaseWalletAdapter } from './adapter';
 import {
   MidenConsumeTransaction,
   MidenSendTransaction,
   MidenTransaction,
-} from "./transaction";
-import { Asset, InputNoteDetails, SignKind, TransactionOutput } from "./types";
+} from './transaction';
+import { Asset, InputNoteDetails, SignKind, TransactionOutput } from './types';
 
 export type Adapter =
   | WalletAdapter

@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 import {
   Adapter,
   AllowedPrivateData,
@@ -9,8 +9,8 @@ import {
   WalletAdapterNetwork,
   WalletName,
   WalletReadyState,
-} from "@demox-labs/miden-wallet-adapter-base";
-import type { NoteFilterTypes } from "@demox-labs/miden-sdk";
+} from '@demox-labs/miden-wallet-adapter-base';
+import type { NoteFilterTypes } from '@demox-labs/miden-sdk';
 
 export interface Wallet {
   adapter: Adapter;
@@ -37,31 +37,31 @@ export interface WalletContextState {
   disconnect(): Promise<void>;
 
   requestTransaction:
-    | MessageSignerWalletAdapterProps["requestTransaction"]
+    | MessageSignerWalletAdapterProps['requestTransaction']
     | undefined;
 
-  requestSend: MessageSignerWalletAdapterProps["requestSend"] | undefined;
+  requestSend: MessageSignerWalletAdapterProps['requestSend'] | undefined;
 
-  requestConsume: MessageSignerWalletAdapterProps["requestConsume"] | undefined;
+  requestConsume: MessageSignerWalletAdapterProps['requestConsume'] | undefined;
 
-  requestAssets: MessageSignerWalletAdapterProps["requestAssets"] | undefined;
+  requestAssets: MessageSignerWalletAdapterProps['requestAssets'] | undefined;
 
   requestPrivateNotes:
-    | MessageSignerWalletAdapterProps["requestPrivateNotes"]
+    | MessageSignerWalletAdapterProps['requestPrivateNotes']
     | undefined;
 
-  signBytes: MessageSignerWalletAdapterProps["signBytes"] | undefined;
+  signBytes: MessageSignerWalletAdapterProps['signBytes'] | undefined;
 
   importPrivateNote:
-    | MessageSignerWalletAdapterProps["importPrivateNote"]
+    | MessageSignerWalletAdapterProps['importPrivateNote']
     | undefined;
 
   requestConsumableNotes:
-    | MessageSignerWalletAdapterProps["requestConsumableNotes"]
+    | MessageSignerWalletAdapterProps['requestConsumableNotes']
     | undefined;
 
   waitForTransaction:
-    | MessageSignerWalletAdapterProps["waitForTransaction"]
+    | MessageSignerWalletAdapterProps['waitForTransaction']
     | undefined;
 }
 
@@ -73,7 +73,7 @@ const DEFAULT_CONTEXT = {
   connected: false,
   disconnecting: false,
   select(_name: WalletName) {
-    console.error(constructMissingProviderErrorMessage("get", "select"));
+    console.error(constructMissingProviderErrorMessage('get', 'select'));
   },
   connect(
     _privateDataPermission: PrivateDataPermission,
@@ -81,95 +81,95 @@ const DEFAULT_CONTEXT = {
     _allowedPrivateData?: AllowedPrivateData
   ) {
     return Promise.reject(
-      console.error(constructMissingProviderErrorMessage("get", "connect"))
+      console.error(constructMissingProviderErrorMessage('get', 'connect'))
     );
   },
   disconnect() {
     return Promise.reject(
-      console.error(constructMissingProviderErrorMessage("get", "disconnect"))
+      console.error(constructMissingProviderErrorMessage('get', 'disconnect'))
     );
   },
   requestTransaction(_transaction: MidenTransaction) {
     return Promise.reject(
       console.error(
-        constructMissingProviderErrorMessage("get", "requestTransaction")
+        constructMissingProviderErrorMessage('get', 'requestTransaction')
       )
     );
   },
   requestAssets() {
     return Promise.reject(
       console.error(
-        constructMissingProviderErrorMessage("get", "requestAssets")
+        constructMissingProviderErrorMessage('get', 'requestAssets')
       )
     );
   },
   requestPrivateNotes(_noteFilterType: NoteFilterTypes, _noteIds?: string[]) {
     return Promise.reject(
       console.error(
-        constructMissingProviderErrorMessage("get", "requestPrivateNotes")
+        constructMissingProviderErrorMessage('get', 'requestPrivateNotes')
       )
     );
   },
   signBytes(_message: Uint8Array, _kind: SignKind) {
     return Promise.reject(
-      console.error(constructMissingProviderErrorMessage("get", "signBytes"))
+      console.error(constructMissingProviderErrorMessage('get', 'signBytes'))
     );
   },
   importPrivateNote(_note: Uint8Array) {
     return Promise.reject(
       console.error(
-        constructMissingProviderErrorMessage("get", "importPrivateNote")
+        constructMissingProviderErrorMessage('get', 'importPrivateNote')
       )
     );
   },
   requestConsumableNotes() {
     return Promise.reject(
       console.error(
-        constructMissingProviderErrorMessage("get", "requestConsumableNotes")
+        constructMissingProviderErrorMessage('get', 'requestConsumableNotes')
       )
     );
   },
   waitForTransaction(_txId: string, _timeout?: number) {
     return Promise.reject(
       console.error(
-        constructMissingProviderErrorMessage("get", "waitForTransaction")
+        constructMissingProviderErrorMessage('get', 'waitForTransaction')
       )
     );
   },
   requestSend(_transaction) {
     return Promise.reject(
-      console.error(constructMissingProviderErrorMessage("get", "requestSend"))
+      console.error(constructMissingProviderErrorMessage('get', 'requestSend'))
     );
   },
   requestConsume(_transaction) {
     return Promise.reject(
       console.error(
-        constructMissingProviderErrorMessage("get", "requestConsume")
+        constructMissingProviderErrorMessage('get', 'requestConsume')
       )
     );
   },
 } as WalletContextState;
-Object.defineProperty(DEFAULT_CONTEXT, "wallets", {
+Object.defineProperty(DEFAULT_CONTEXT, 'wallets', {
   get() {
-    console.error(constructMissingProviderErrorMessage("read", "wallets"));
+    console.error(constructMissingProviderErrorMessage('read', 'wallets'));
     return EMPTY_ARRAY;
   },
 });
-Object.defineProperty(DEFAULT_CONTEXT, "wallet", {
+Object.defineProperty(DEFAULT_CONTEXT, 'wallet', {
   get() {
-    console.error(constructMissingProviderErrorMessage("read", "wallet"));
+    console.error(constructMissingProviderErrorMessage('read', 'wallet'));
     return null;
   },
 });
-Object.defineProperty(DEFAULT_CONTEXT, "address", {
+Object.defineProperty(DEFAULT_CONTEXT, 'address', {
   get() {
-    console.error(constructMissingProviderErrorMessage("read", "address"));
+    console.error(constructMissingProviderErrorMessage('read', 'address'));
     return null;
   },
 });
-Object.defineProperty(DEFAULT_CONTEXT, "publicKey", {
+Object.defineProperty(DEFAULT_CONTEXT, 'publicKey', {
   get() {
-    console.error(constructMissingProviderErrorMessage("read", "publicKey"));
+    console.error(constructMissingProviderErrorMessage('read', 'publicKey'));
     return null;
   },
 });
@@ -179,12 +179,12 @@ function constructMissingProviderErrorMessage(
   valueName: string
 ) {
   return (
-    "You have tried to " +
+    'You have tried to ' +
     ` ${action} "${valueName}"` +
-    " on a WalletContext without providing one." +
-    " Make sure to render a WalletProvider" +
-    " as an ancestor of the component that uses " +
-    "WalletContext"
+    ' on a WalletContext without providing one.' +
+    ' Make sure to render a WalletProvider' +
+    ' as an ancestor of the component that uses ' +
+    'WalletContext'
   );
 }
 
