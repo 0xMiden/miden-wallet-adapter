@@ -45,8 +45,8 @@ export type FungibleAssetDetails = {
   faucetId: string;
 };
 
-// The dev facing transaction output interface
-// if we get an error from the wallet we throw it as an exception
+// Developer-facing transaction output interface
+// Errors from the wallet are thrown as exceptions
 export interface TransactionOutput {
   txHash: string;
   outputNotes: Note[];
@@ -56,7 +56,8 @@ export interface IFailedTransactionOutput {
   errorMessage: string;
 }
 
-// Wallet gives Uint8Array but for devs we expose the Note instead
+// Internal wallet response format - uses serialized note data (string[])
+// Converted to Note objects for the public API (TransactionOutput)
 export interface WalletTransactionSuccessOuput {
   txHash: string;
   outputNotes: string[];
