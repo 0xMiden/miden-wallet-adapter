@@ -1,4 +1,4 @@
-import type { TransactionRequest } from '@demox-labs/miden-sdk';
+import type { TransactionRequest } from '@miden-sdk/miden-sdk';
 import { u8ToB64 } from './helpers';
 
 export type NoteTypeString = 'public' | 'private';

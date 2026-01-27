@@ -5,17 +5,6 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@demox-labs/miden-sdk@npm:0.12.3":
-  version: 0.12.3
-  resolution: "@demox-labs/miden-sdk@npm:0.12.3"
-  dependencies:
-    "@rollup/plugin-typescript": "npm:^12.3.0"
-    dexie: "npm:^4.0.1"
-    glob: "npm:^11.0.0"
-  checksum: 10c0/57b6404dfda017e5999b99687b700c9d4d9810022c794a770499b2b21d93239e026cbd29ce991ca33aecd47ed3f6d61a79573ca90146ab30bd6d1a901824f8b4
-  languageName: node
-  linkType: hard
-
 "@demox-labs/miden-wallet-adapter-base@workspace:^, @demox-labs/miden-wallet-adapter-base@workspace:packages/core/base":
   version: 0.0.0-use.local
   resolution: "@demox-labs/miden-wallet-adapter-base@workspace:packages/core/base"
@@ -124,6 +113,17 @@ __metadata:
     wrap-ansi: "npm:^8.1.0"
     wrap-ansi-cjs: "npm:wrap-ansi@^7.0.0"
   checksum: 10c0/b1bf42535d49f11dc137f18d5e4e63a28c5569de438a221c369483731e9dac9fb797af554e8bf02b6192d1e5eba6e6402cf93900c3d0ac86391d00d04876789e
+  languageName: node
+  linkType: hard
+
+"@miden-sdk/miden-sdk@npm:^0.13.0-next.4":
+  version: 0.13.0-next.4
+  resolution: "@miden-sdk/miden-sdk@npm:0.13.0-next.4"
+  dependencies:
+    "@rollup/plugin-typescript": "npm:^12.3.0"
+    dexie: "npm:^4.0.1"
+    glob: "npm:^11.0.0"
+  checksum: 10c0/074fe9c254be840bc33773bbd45f5629fe2c5bda74f31a1af107b7a68bc1dff0ef533ce2f9c1456334081ac2fdd4d273e9263ce13e1ed2761f7182b958e13937
   languageName: node
   linkType: hard
 
@@ -398,9 +398,9 @@ __metadata:
   linkType: hard
 
 "dexie@npm:^4.0.1":
-  version: 4.2.0
-  resolution: "dexie@npm:4.2.0"
-  checksum: 10c0/ba3f84a769ee34910263bce0957736968ba05162eebf47d5dab3dbb599890b122ac0d4a64ceb02428e5ec6a39f66923d8531e120c6341709fce1afbc698ea37c
+  version: 4.3.0
+  resolution: "dexie@npm:4.3.0"
+  checksum: 10c0/c152db2612f26040c4967c1040c2707837a7b9a97247ff1d7e5e85b6da6abfb26a65248195cd2a54d2202579fa5009b7eb0a696d93444b39fac551eb0d8fc21a
   languageName: node
   linkType: hard
 
@@ -636,7 +636,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "miden-wallet-adapter@workspace:."
   dependencies:
-    "@demox-labs/miden-sdk": "npm:0.12.3"
+    "@miden-sdk/miden-sdk": "npm:^0.13.0-next.4"
     "@types/node": "npm:^22.13.5"
     "@types/react": "npm:^19.0.10"
     "@types/react-dom": "npm:^19.0.4"

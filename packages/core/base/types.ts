@@ -1,7 +1,8 @@
-import type { InputNoteState, NoteType } from "@demox-labs/miden-sdk";
+import type { InputNoteState, NoteType } from "@miden-sdk/miden-sdk";
 
 export enum WalletAdapterNetwork {
   Testnet = 'testnet',
+  Devent = 'devent',
   Localnet = 'localnet',
 }
 
