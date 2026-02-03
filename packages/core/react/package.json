@@ -18,7 +18,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@demox-labs/miden-wallet-adapter-base": "workspace:^"
+    "@demox-labs/miden-wallet-adapter-base": "workspace:^",
+    "@demox-labs/miden-wallet-adapter-miden": "workspace:^"
   },
   "devDependencies": {
     "@demox-labs/miden-sdk": "^0.12.5",
