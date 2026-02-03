@@ -6,4 +6,4 @@
 
 # Type Alias: WalletTransactionOutput
 
-> **WalletTransactionOutput** = [`WalletTransactionSuccessOuput`](../interfaces/WalletTransactionSuccessOuput.md) \| [`IFailedTransactionOutput`](../interfaces/IFailedTransactionOutput.md)
+> **WalletTransactionOutput** = [`WalletTransactionSuccessOutput`](../interfaces/WalletTransactionSuccessOutput.md) \| [`IFailedTransactionOutput`](../interfaces/IFailedTransactionOutput.md)

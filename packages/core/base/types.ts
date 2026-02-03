@@ -58,11 +58,11 @@ export interface IFailedTransactionOutput {
 
 // Internal wallet response format - uses serialized note data (string[])
 // Converted to Note objects for the public API (TransactionOutput)
-export interface WalletTransactionSuccessOuput {
+export interface WalletTransactionSuccessOutput {
   txHash: string;
   outputNotes: string[];
 }
 
 export type WalletTransactionOutput =
-  | WalletTransactionSuccessOuput
+  | WalletTransactionSuccessOutput
   | IFailedTransactionOutput;
