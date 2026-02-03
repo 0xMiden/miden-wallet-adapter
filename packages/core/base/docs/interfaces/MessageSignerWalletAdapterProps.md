@@ -186,6 +186,22 @@
 
 ***
 
+### requestConsume()
+
+> **requestConsume**(`transaction`): `Promise`\<`string`\>
+
+#### Parameters
+
+##### transaction
+
+[`MidenConsumeTransaction`](MidenConsumeTransaction.md)
+
+#### Returns
+
+`Promise`\<`string`\>
+
+***
+
 ### requestPrivateNotes()
 
 > **requestPrivateNotes**(`noteFilterType`, `noteIds?`): `Promise`\<[`InputNoteDetails`](../type-aliases/InputNoteDetails.md)[]\>
@@ -203,6 +219,22 @@
 #### Returns
 
 `Promise`\<[`InputNoteDetails`](../type-aliases/InputNoteDetails.md)[]\>
+
+***
+
+### requestSend()
+
+> **requestSend**(`transaction`): `Promise`\<`string`\>
+
+#### Parameters
+
+##### transaction
+
+[`MidenSendTransaction`](MidenSendTransaction.md)
+
+#### Returns
+
+`Promise`\<`string`\>
 
 ***
 
@@ -239,3 +271,23 @@
 #### Returns
 
 `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
+
+***
+
+### waitForTransaction()
+
+> **waitForTransaction**(`txId`, `timeout?`): `Promise`\<[`TransactionOutput`](TransactionOutput.md)\>
+
+#### Parameters
+
+##### txId
+
+`string`
+
+##### timeout?
+
+`number`
+
+#### Returns
+
+`Promise`\<[`TransactionOutput`](TransactionOutput.md)\>

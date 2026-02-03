@@ -14,13 +14,7 @@ import {
   WalletReadyState,
 } from '@demox-labs/miden-wallet-adapter-base';
 import type { FC, ReactNode } from 'react';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 import type { Wallet } from './useWallet';
 import { WalletContext } from './useWallet';
@@ -136,7 +130,7 @@ export const WalletProvider: FC<WalletProviderProps> = ({
         adapter: wallet.adapter,
         connected: wallet.adapter.connected,
         address: wallet.adapter.address,
-        publicKey: wallet.adapter.publicKey
+        publicKey: wallet.adapter.publicKey,
       });
     } else {
       setState(initialState);
@@ -160,7 +154,7 @@ export const WalletProvider: FC<WalletProviderProps> = ({
       ...state,
       connected: adapter.connected,
       address: adapter.address,
-      publicKey: adapter.publicKey
+      publicKey: adapter.publicKey,
     }));
   }, [adapter]);
 
@@ -219,7 +213,11 @@ export const WalletProvider: FC<WalletProviderProps> = ({
       isConnecting.current = true;
       setConnecting(true);
       try {
-        await adapter.connect(privateDataPermission, network, allowedPrivateData);
+        await adapter.connect(
+          privateDataPermission,
+          network,
+          allowedPrivateData
+        );
       } catch (error: any) {
         // Clear the selected wallet
         setName(null);
@@ -337,18 +335,17 @@ export const WalletProvider: FC<WalletProviderProps> = ({
     [adapter, handleError, connected]
   );
 
-  const signBytes:
-    | MessageSignerWalletAdapterProps['signBytes']
-    | undefined = useMemo(
-    () =>
-      adapter && 'signBytes' in adapter
-        ? async (message: Uint8Array, kind: SignKind) => {
-            if (!connected) throw handleError(new WalletNotConnectedError());
-            return await adapter.signBytes(message, kind);
-          }
-        : undefined,
-    [adapter, handleError, connected]
-  );
+  const signBytes: MessageSignerWalletAdapterProps['signBytes'] | undefined =
+    useMemo(
+      () =>
+        adapter && 'signBytes' in adapter
+          ? async (message: Uint8Array, kind: SignKind) => {
+              if (!connected) throw handleError(new WalletNotConnectedError());
+              return await adapter.signBytes(message, kind);
+            }
+          : undefined,
+      [adapter, handleError, connected]
+    );
 
   const importPrivateNote:
     | MessageSignerWalletAdapterProps['importPrivateNote']
@@ -376,6 +373,45 @@ export const WalletProvider: FC<WalletProviderProps> = ({
     [adapter, handleError, connected]
   );
 
+  const waitForTransaction:
+    | MessageSignerWalletAdapterProps['waitForTransaction']
+    | undefined = useMemo(
+    () =>
+      adapter && 'waitForTransaction' in adapter
+        ? async (txId: string, timeout?: number) => {
+            if (!connected) throw handleError(new WalletNotConnectedError());
+            return await adapter.waitForTransaction(txId, timeout);
+          }
+        : undefined,
+    [adapter, handleError, connected]
+  );
+
+  const requestSend:
+    | MessageSignerWalletAdapterProps['requestSend']
+    | undefined = useMemo(
+    () =>
+      adapter && 'requestSend' in adapter
+        ? async (transaction) => {
+            if (!connected) throw handleError(new WalletNotConnectedError());
+            return await adapter.requestSend(transaction);
+          }
+        : undefined,
+    [adapter, handleError, connected]
+  );
+
+  const requestConsume:
+    | MessageSignerWalletAdapterProps['requestConsume']
+    | undefined = useMemo(
+    () =>
+      adapter && 'requestConsume' in adapter
+        ? async (transaction) => {
+            if (!connected) throw handleError(new WalletNotConnectedError());
+            return await adapter.requestConsume(transaction);
+          }
+        : undefined,
+    [adapter, handleError, connected]
+  );
+
   return (
     <WalletContext.Provider
       value={{
@@ -395,7 +431,10 @@ export const WalletProvider: FC<WalletProviderProps> = ({
         requestPrivateNotes,
         signBytes,
         importPrivateNote,
-        requestConsumableNotes
+        requestConsumableNotes,
+        waitForTransaction,
+        requestSend,
+        requestConsume,
       }}
     >
       {children}

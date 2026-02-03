@@ -53,14 +53,17 @@
 ## Interfaces
 
 - [Asset](interfaces/Asset.md)
+- [IFailedTransactionOutput](interfaces/IFailedTransactionOutput.md)
 - [MessageSignerWalletAdapterProps](interfaces/MessageSignerWalletAdapterProps.md)
 - [MidenConsumeTransaction](interfaces/MidenConsumeTransaction.md)
 - [MidenCustomTransaction](interfaces/MidenCustomTransaction.md)
 - [MidenSendTransaction](interfaces/MidenSendTransaction.md)
 - [MidenTransaction](interfaces/MidenTransaction.md)
 - [SignerWalletAdapterProps](interfaces/SignerWalletAdapterProps.md)
+- [TransactionOutput](interfaces/TransactionOutput.md)
 - [WalletAdapterEvents](interfaces/WalletAdapterEvents.md)
 - [WalletAdapterProps](interfaces/WalletAdapterProps.md)
+- [WalletTransactionSuccessOutput](interfaces/WalletTransactionSuccessOutput.md)
 
 ## Type Aliases
 
@@ -76,7 +79,10 @@
 - [TransactionPayload](type-aliases/TransactionPayload.md)
 - [WalletAdapter](type-aliases/WalletAdapter.md)
 - [WalletName](type-aliases/WalletName.md)
+- [WalletTransactionOutput](type-aliases/WalletTransactionOutput.md)
 
 ## Functions
 
+- [b64ToU8](functions/b64ToU8.md)
 - [scopePollingDetectionStrategy](functions/scopePollingDetectionStrategy.md)
+- [u8ToB64](functions/u8ToB64.md)

@@ -688,3 +688,27 @@ Remove the listeners of a given event.
 #### Overrides
 
 `BaseMessageSignerWalletAdapter.signBytes`
+
+***
+
+### waitForTransaction()
+
+> **waitForTransaction**(`txId`, `timeout?`): `Promise`\<`TransactionOutput`\>
+
+#### Parameters
+
+##### txId
+
+`string`
+
+##### timeout?
+
+`number`
+
+#### Returns
+
+`Promise`\<`TransactionOutput`\>
+
+#### Overrides
+
+`BaseMessageSignerWalletAdapter.waitForTransaction`

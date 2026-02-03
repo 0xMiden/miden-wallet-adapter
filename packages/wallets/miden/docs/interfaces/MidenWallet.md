@@ -484,3 +484,23 @@ Remove the listeners of a given event.
 #### Returns
 
 `Promise`\<\{ `signature`: `Uint8Array`; \}\>
+
+***
+
+### waitForTransaction()
+
+> **waitForTransaction**(`txId`, `timeout?`): `Promise`\<`WalletTransactionOutput`\>
+
+#### Parameters
+
+##### txId
+
+`string`
+
+##### timeout?
+
+`number`
+
+#### Returns
+
+`Promise`\<`WalletTransactionOutput`\>

@@ -1,4 +1,4 @@
-import type { InputNoteState, NoteType } from "@demox-labs/miden-sdk";
+import type { InputNoteState, Note, NoteType } from '@demox-labs/miden-sdk';
 
 export enum WalletAdapterNetwork {
   Testnet = 'testnet',
@@ -21,10 +21,10 @@ export enum AllowedPrivateData {
   Assets = 1 << 0, // 1
   Notes = 1 << 1, // 2
   Storage = 1 << 2, // 4
-  All = (1 << 16) - 1 // 65535 (allows for new permissions without requiring a migration)
+  All = (1 << 16) - 1, // 65535 (allows for new permissions without requiring a migration)
 }
 
-export type SignKind = "word" | "signingInputs";
+export type SignKind = 'word' | 'signingInputs';
 
 export interface Asset {
   faucetId: string;
@@ -44,3 +44,25 @@ export type FungibleAssetDetails = {
   amount: string;
   faucetId: string;
 };
+
+// Developer-facing transaction output interface
+// Errors from the wallet are thrown as exceptions
+export interface TransactionOutput {
+  txHash: string;
+  outputNotes: Note[];
+}
+
+export interface IFailedTransactionOutput {
+  errorMessage: string;
+}
+
+// Internal wallet response format - uses serialized note data (string[])
+// Converted to Note objects for the public API (TransactionOutput)
+export interface WalletTransactionSuccessOutput {
+  txHash: string;
+  outputNotes: string[];
+}
+
+export type WalletTransactionOutput =
+  | WalletTransactionSuccessOutput
+  | IFailedTransactionOutput;

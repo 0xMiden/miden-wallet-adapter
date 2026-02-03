@@ -8,7 +8,7 @@ import {
   SignKind,
   WalletAdapterNetwork,
   WalletName,
-  WalletReadyState
+  WalletReadyState,
 } from '@demox-labs/miden-wallet-adapter-base';
 import type { NoteFilterTypes } from '@demox-labs/miden-sdk';
 
@@ -39,18 +39,18 @@ export interface WalletContextState {
   requestTransaction:
     | MessageSignerWalletAdapterProps['requestTransaction']
     | undefined;
-  
-  requestAssets:
-    | MessageSignerWalletAdapterProps['requestAssets']
-    | undefined;
-  
-  requestPrivateNotes: 
+
+  requestSend: MessageSignerWalletAdapterProps['requestSend'] | undefined;
+
+  requestConsume: MessageSignerWalletAdapterProps['requestConsume'] | undefined;
+
+  requestAssets: MessageSignerWalletAdapterProps['requestAssets'] | undefined;
+
+  requestPrivateNotes:
     | MessageSignerWalletAdapterProps['requestPrivateNotes']
     | undefined;
 
-  signBytes:
-    | MessageSignerWalletAdapterProps['signBytes']
-    | undefined;
+  signBytes: MessageSignerWalletAdapterProps['signBytes'] | undefined;
 
   importPrivateNote:
     | MessageSignerWalletAdapterProps['importPrivateNote']
@@ -58,6 +58,10 @@ export interface WalletContextState {
 
   requestConsumableNotes:
     | MessageSignerWalletAdapterProps['requestConsumableNotes']
+    | undefined;
+
+  waitForTransaction:
+    | MessageSignerWalletAdapterProps['waitForTransaction']
     | undefined;
 }
 
@@ -94,7 +98,9 @@ const DEFAULT_CONTEXT = {
   },
   requestAssets() {
     return Promise.reject(
-      console.error(constructMissingProviderErrorMessage('get', 'requestAssets'))
+      console.error(
+        constructMissingProviderErrorMessage('get', 'requestAssets')
+      )
     );
   },
   requestPrivateNotes(_noteFilterType: NoteFilterTypes, _noteIds?: string[]) {
@@ -106,19 +112,40 @@ const DEFAULT_CONTEXT = {
   },
   signBytes(_message: Uint8Array, _kind: SignKind) {
     return Promise.reject(
-      console.error(
-        constructMissingProviderErrorMessage('get', 'signBytes')
-      )
+      console.error(constructMissingProviderErrorMessage('get', 'signBytes'))
     );
   },
   importPrivateNote(_note: Uint8Array) {
     return Promise.reject(
-      console.error(constructMissingProviderErrorMessage('get', 'importPrivateNote'))
+      console.error(
+        constructMissingProviderErrorMessage('get', 'importPrivateNote')
+      )
     );
   },
   requestConsumableNotes() {
     return Promise.reject(
-      console.error(constructMissingProviderErrorMessage('get', 'requestConsumableNotes'))
+      console.error(
+        constructMissingProviderErrorMessage('get', 'requestConsumableNotes')
+      )
+    );
+  },
+  waitForTransaction(_txId: string, _timeout?: number) {
+    return Promise.reject(
+      console.error(
+        constructMissingProviderErrorMessage('get', 'waitForTransaction')
+      )
+    );
+  },
+  requestSend(_transaction) {
+    return Promise.reject(
+      console.error(constructMissingProviderErrorMessage('get', 'requestSend'))
+    );
+  },
+  requestConsume(_transaction) {
+    return Promise.reject(
+      console.error(
+        constructMissingProviderErrorMessage('get', 'requestConsume')
+      )
     );
   },
 } as WalletContextState;
