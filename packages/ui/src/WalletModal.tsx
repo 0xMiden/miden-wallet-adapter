@@ -1,23 +1,17 @@
-import type { FC, MouseEvent } from 'react';
-import {
-  useCallback,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { createPortal } from 'react-dom';
+import type { FC, MouseEvent } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   AllowedPrivateData,
   PrivateDataPermission,
   WalletAdapterNetwork,
   WalletName,
   WalletReadyState,
-} from '@demox-labs/miden-wallet-adapter-base';
-import { useWallet, Wallet } from '@demox-labs/miden-wallet-adapter-react';
-import { useWalletModal } from './useWalletModal';
-import { WalletListItem } from './WalletListItem';
-import { DiscoverMidenMessage } from './DiscoverMidenMessage';
+} from "@miden-sdk/miden-wallet-adapter-base";
+import { useWallet, Wallet } from "@miden-sdk/miden-wallet-adapter-react";
+import { useWalletModal } from "./useWalletModal";
+import { WalletListItem } from "./WalletListItem";
+import { DiscoverMidenMessage } from "./DiscoverMidenMessage";
 
 export interface WalletModalProps {
   className?: string;
@@ -28,8 +22,8 @@ export interface WalletModalProps {
 }
 
 export const WalletModal: FC<WalletModalProps> = ({
-  className = '',
-  container = 'body',
+  className = "",
+  container = "body",
   privateDataPermission,
   network,
   allowedPrivateData,
@@ -64,7 +58,7 @@ export const WalletModal: FC<WalletModalProps> = ({
         installedWallets[0]!
       : wallets.find(
           (wallet: { adapter: { name: WalletName } }) =>
-            wallet.adapter.name === 'Miden Wallet'
+            wallet.adapter.name === "Miden Wallet",
         ) ||
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           otherWallets[0]!;
@@ -72,7 +66,7 @@ export const WalletModal: FC<WalletModalProps> = ({
 
   const otherInstalledWallets = useMemo(() => {
     return installedWallets.filter(
-      (wallet) => wallet.adapter.name !== getStartedWallet.adapter.name
+      (wallet) => wallet.adapter.name !== getStartedWallet.adapter.name,
     );
   }, [installedWallets, getStartedWallet]);
 
@@ -86,7 +80,7 @@ export const WalletModal: FC<WalletModalProps> = ({
       event.preventDefault();
       hideModal();
     },
-    [hideModal]
+    [hideModal],
   );
 
   const handleWalletClick = useCallback(
@@ -94,7 +88,7 @@ export const WalletModal: FC<WalletModalProps> = ({
       select(walletName);
       handleClose(event);
     },
-    [select, handleClose]
+    [select, handleClose],
   );
 
   const handleTabKey = useCallback(
@@ -103,7 +97,7 @@ export const WalletModal: FC<WalletModalProps> = ({
       if (!node) return;
 
       // here we query all focusable elements
-      const focusableElements = node.querySelectorAll('button');
+      const focusableElements = node.querySelectorAll("button");
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const firstElement = focusableElements[0]!;
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -123,14 +117,14 @@ export const WalletModal: FC<WalletModalProps> = ({
         }
       }
     },
-    [ref]
+    [ref],
   );
 
   useLayoutEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         hideModal();
-      } else if (event.key === 'Tab') {
+      } else if (event.key === "Tab") {
         handleTabKey(event);
       }
     };
@@ -140,20 +134,20 @@ export const WalletModal: FC<WalletModalProps> = ({
     // Hack to enable fade in animation after mount
     setTimeout(() => setFadeIn(true), 0);
     // Prevent scrolling on mount
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     // Listen for keydown events
-    window.addEventListener('keydown', handleKeyDown, false);
+    window.addEventListener("keydown", handleKeyDown, false);
 
     return () => {
       // Re-enable scrolling when component unmounts
       document.body.style.overflow = overflow;
-      window.removeEventListener('keydown', handleKeyDown, false);
+      window.removeEventListener("keydown", handleKeyDown, false);
     };
   }, [hideModal, handleTabKey]);
 
   useLayoutEffect(
     () => setPortal(document.querySelector(container)),
-    [container]
+    [container],
   );
 
   useLayoutEffect(() => {
@@ -161,7 +155,7 @@ export const WalletModal: FC<WalletModalProps> = ({
       connect(
         privateDataPermission || PrivateDataPermission.UponRequest,
         network || WalletAdapterNetwork.Testnet,
-        allowedPrivateData ?? AllowedPrivateData.None
+        allowedPrivateData ?? AllowedPrivateData.None,
       ).catch((e) => {
         console.log({ e });
       });
@@ -175,7 +169,7 @@ export const WalletModal: FC<WalletModalProps> = ({
         aria-labelledby="wallet-adapter-modal-title"
         aria-modal="true"
         className={`wallet-adapter-modal ${
-          fadeIn && 'wallet-adapter-modal-fade-in'
+          fadeIn && "wallet-adapter-modal-fade-in"
         } ${className}`}
         ref={ref}
         role="dialog"
@@ -275,7 +269,7 @@ export const WalletModal: FC<WalletModalProps> = ({
           onMouseDown={handleClose}
         />
       </div>,
-      portal
+      portal,
     )
   );
 };

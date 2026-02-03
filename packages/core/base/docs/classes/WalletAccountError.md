@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-base**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-base**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-base](../README.md) / WalletAccountError
+[@miden-sdk/miden-wallet-adapter-base](../README.md) / WalletAccountError
 
 # Class: WalletAccountError
 

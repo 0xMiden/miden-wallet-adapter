@@ -8,13 +8,13 @@ The **Miden Wallet Adapter** package provides everything you need to integrate t
 
 ```bash
 # npm
-npm install @demox-labs/miden-wallet-adapter
+npm install @miden-sdkmiden-wallet-adapter
 
 # yarn
-yarn add @demox-labs/miden-wallet-adapter
+yarn add @miden-sdkmiden-wallet-adapter
 
 # pnpm
-pnpm add @demox-labs/miden-wallet-adapter
+pnpm add @miden-sdkmiden-wallet-adapter
 ```
 
 ### Peer Dependencies
@@ -32,18 +32,16 @@ npm install react react-dom
 Wrap your app with the `WalletProvider` and `WalletModalProvider`:
 
 ```tsx
-import React from 'react';
+import React from "react";
 import {
   WalletProvider,
   WalletModalProvider,
   MidenWalletAdapter,
-} from '@demox-labs/miden-wallet-adapter';
+} from "@miden-sdkmiden-wallet-adapter";
 
-import '@demox-labs/miden-wallet-adapter/styles.css';
+import "@miden-sdkmiden-wallet-adapter/styles.css";
 
-const wallets = [
-  new MidenWalletAdapter({ appName: 'Your Miden App' }),
-];
+const wallets = [new MidenWalletAdapter({ appName: "Your Miden App" })];
 
 function App() {
   return (
@@ -55,6 +53,7 @@ function App() {
   );
 }
 ```
+
 **Note**: Either the stylesheet must be imported or custom styles must be defined
 
 ### 2. Add Wallet Connection UI
@@ -62,7 +61,7 @@ function App() {
 Use the `WalletMultiButton` for a complete wallet connection experience:
 
 ```tsx
-import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter';
+import { WalletMultiButton } from "@miden-sdkmiden-wallet-adapter";
 
 function Header() {
   return (
@@ -81,7 +80,7 @@ Access wallet state and functionality with the `useWallet` hook:
 #### Send Transaction
 
 ```tsx
-import { useWallet, SendTransaction } from '@demox-labs/miden-wallet-adapter';
+import { useWallet, SendTransaction } from "@miden-sdkmiden-wallet-adapter";
 
 function SendComponent() {
   const { wallet, address, connected } = useWallet();
@@ -91,17 +90,17 @@ function SendComponent() {
 
     const transaction = new SendTransaction(
       address,
-      'recipient_address_here',
-      'faucet_id_here',
-      'public', // or 'private'
-      BigInt(1000) // amount
+      "recipient_address_here",
+      "faucet_id_here",
+      "public", // or 'private'
+      BigInt(1000), // amount
     );
 
     try {
       await wallet.adapter.requestSend(transaction);
-      console.log('Transaction sent successfully!');
+      console.log("Transaction sent successfully!");
     } catch (error) {
-      console.error('Transaction failed:', error);
+      console.error("Transaction failed:", error);
     }
   };
 
@@ -121,7 +120,7 @@ function SendComponent() {
 #### Custom Transaction
 
 ```tsx
-import { useWallet, CustomTransaction } from '@demox-labs/miden-wallet-adapter';
+import { useWallet, CustomTransaction } from "@miden-sdkmiden-wallet-adapter";
 
 function CustomTransactionComponent() {
   const { wallet, address, requestTransaction } = useWallet();
@@ -131,20 +130,24 @@ function CustomTransactionComponent() {
 
     const customTransaction = new CustomTransaction(
       address,
-      transactionRequest // TransactionRequest from Miden Web SDK
+      transactionRequest, // TransactionRequest from Miden Web SDK
     );
 
     await requestTransaction(customTransaction);
   };
 
-  return <button onClick={handleCustomTransaction}>Execute Custom Transaction</button>;
+  return (
+    <button onClick={handleCustomTransaction}>
+      Execute Custom Transaction
+    </button>
+  );
 }
 ```
 
 #### Requesting assets and private notes
 
 ```tsx
-import { useWallet } from '@demox-labs/miden-wallet-adapter';
+import { useWallet } from '@miden-sdkmiden-wallet-adapter';
 
 function AssetsAndNotesComponent() {
   const { wallet, address, requestAssets, requestPrivateNotes } = useWallet();
@@ -171,7 +174,7 @@ The package includes several pre-built React components:
 
 - **`WalletMultiButton`** - All-in-one button for connect/disconnect/account display
 - **`WalletConnectButton`** - Simple connect button
-- **`WalletDisconnectButton`** - Simple disconnect button  
+- **`WalletDisconnectButton`** - Simple disconnect button
 - **`WalletModal`** - Modal for wallet selection
 - **`WalletModalButton`** - Button that opens the wallet modal
 
@@ -203,16 +206,16 @@ If you prefer more granular control, you can install individual packages:
 
 ```bash
 # Core infrastructure only
-npm install @demox-labs/miden-wallet-adapter-base
+npm install @miden-sdkmiden-wallet-adapter-base
 
 # React integration
-npm install @demox-labs/miden-wallet-adapter-react
+npm install @miden-sdkmiden-wallet-adapter-react
 
 # UI components
-npm install @demox-labs/miden-wallet-adapter-reactui
+npm install @miden-sdkmiden-wallet-adapter-reactui
 
 # Miden wallet adapter
-npm install @demox-labs/miden-wallet-adapter-miden
+npm install @miden-sdkmiden-wallet-adapter-miden
 ```
 
 ## Development
@@ -239,4 +242,4 @@ MIT
 ## Support
 
 - [GitHub Issues](https://github.com/demox-labs/miden-wallet-adapter/issues)
-- [Documentation](https://github.com/demox-labs/miden-wallet-adapter) 
+- [Documentation](https://github.com/demox-labs/miden-wallet-adapter)

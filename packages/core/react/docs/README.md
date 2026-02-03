@@ -1,8 +1,8 @@
-**@demox-labs/miden-wallet-adapter-react**
+**@miden-sdk/miden-wallet-adapter-react**
 
 ***
 
-# @demox-labs/miden-wallet-adapter-react
+# @miden-sdk/miden-wallet-adapter-react
 
 ## Interfaces
 

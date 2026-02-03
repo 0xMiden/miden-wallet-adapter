@@ -12,13 +12,13 @@ import {
   WalletNotReadyError,
   WalletNotSelectedError,
   WalletReadyState,
-} from '@demox-labs/miden-wallet-adapter-base';
-import type { FC, ReactNode } from 'react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocalStorage } from './useLocalStorage';
-import type { Wallet } from './useWallet';
-import { WalletContext } from './useWallet';
-import type { NoteFilterTypes } from '@demox-labs/miden-sdk';
+} from "@miden-sdk/miden-wallet-adapter-base";
+import type { FC, ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useLocalStorage } from "./useLocalStorage";
+import type { Wallet } from "./useWallet";
+import { WalletContext } from "./useWallet";
+import type { NoteFilterTypes } from "@demox-labs/miden-sdk";
 
 export interface WalletProviderProps {
   children: ReactNode;
@@ -52,12 +52,12 @@ export const WalletProvider: FC<WalletProviderProps> = ({
   privateDataPermission = PrivateDataPermission.UponRequest,
   network = WalletAdapterNetwork.Testnet,
   onError,
-  localStorageKey = 'walletName',
+  localStorageKey = "walletName",
   allowedPrivateData = AllowedPrivateData.None,
 }) => {
   const [name, setName] = useLocalStorage<WalletName | null>(
     localStorageKey,
-    null
+    null,
   );
   const [{ wallet, adapter, address, publicKey, connected }, setState] =
     useState(initialState);
@@ -73,7 +73,7 @@ export const WalletProvider: FC<WalletProviderProps> = ({
     adapters.map((adapter) => ({
       adapter,
       readyState: adapter.readyState,
-    }))
+    })),
   );
 
   // When the adapters change, start to listen for changes to their `readyState`
@@ -91,12 +91,12 @@ export const WalletProvider: FC<WalletProviderProps> = ({
               adapter: adapter,
               readyState: adapter.readyState,
             };
-      })
+      }),
     );
 
     function handleReadyStateChange(
       this: Adapter,
-      readyState: WalletReadyState
+      readyState: WalletReadyState,
     ) {
       setWallets((prevWallets) => {
         const index = prevWallets.findIndex(({ adapter }) => adapter === this);
@@ -113,11 +113,11 @@ export const WalletProvider: FC<WalletProviderProps> = ({
     }
 
     adapters.forEach((adapter) =>
-      adapter.on('readyStateChange', handleReadyStateChange, adapter)
+      adapter.on("readyStateChange", handleReadyStateChange, adapter),
     );
     return () =>
       adapters.forEach((adapter) =>
-        adapter.off('readyStateChange', handleReadyStateChange, adapter)
+        adapter.off("readyStateChange", handleReadyStateChange, adapter),
       );
   }, [adapters]);
 
@@ -143,8 +143,8 @@ export const WalletProvider: FC<WalletProviderProps> = ({
       isUnloading.current = true;
     }
 
-    window.addEventListener('beforeunload', listener);
-    return () => window.removeEventListener('beforeunload', listener);
+    window.addEventListener("beforeunload", listener);
+    return () => window.removeEventListener("beforeunload", listener);
   }, [isUnloading]);
 
   // Handle the adapter's connect event
@@ -171,19 +171,19 @@ export const WalletProvider: FC<WalletProviderProps> = ({
       if (!isUnloading.current) (onError || console.error)(error);
       return error;
     },
-    [isUnloading, onError]
+    [isUnloading, onError],
   );
 
   // Setup and teardown event listeners when the adapter changes
   useEffect(() => {
     if (adapter) {
-      adapter.on('connect', handleConnect);
-      adapter.on('disconnect', handleDisconnect);
-      adapter.on('error', handleError);
+      adapter.on("connect", handleConnect);
+      adapter.on("disconnect", handleDisconnect);
+      adapter.on("error", handleError);
       return () => {
-        adapter.off('connect', handleConnect);
-        adapter.off('disconnect', handleDisconnect);
-        adapter.off('error', handleError);
+        adapter.off("connect", handleConnect);
+        adapter.off("disconnect", handleDisconnect);
+        adapter.off("error", handleError);
       };
     }
   }, [adapter, handleConnect, handleDisconnect, handleError]);
@@ -243,8 +243,8 @@ export const WalletProvider: FC<WalletProviderProps> = ({
       // Clear the selected wallet
       setName(null);
 
-      if (typeof window !== 'undefined') {
-        window.open(adapter.url, '_blank');
+      if (typeof window !== "undefined") {
+        window.open(adapter.url, "_blank");
       }
 
       throw handleError(new WalletNotReadyError());
@@ -295,44 +295,44 @@ export const WalletProvider: FC<WalletProviderProps> = ({
 
   // Request transaction
   const requestTransaction:
-    | MessageSignerWalletAdapterProps['requestTransaction']
+    | MessageSignerWalletAdapterProps["requestTransaction"]
     | undefined = useMemo(
     () =>
-      adapter && 'requestTransaction' in adapter
+      adapter && "requestTransaction" in adapter
         ? async (transaction: MidenTransaction) => {
             if (!connected) throw handleError(new WalletNotConnectedError());
             return await adapter.requestTransaction(transaction);
           }
         : undefined,
-    [adapter, handleError, connected]
+    [adapter, handleError, connected],
   );
 
   // Request assets
   const requestAssets:
-    | MessageSignerWalletAdapterProps['requestAssets']
+    | MessageSignerWalletAdapterProps["requestAssets"]
     | undefined = useMemo(
     () =>
-      adapter && 'requestAssets' in adapter
+      adapter && "requestAssets" in adapter
         ? async () => {
             if (!connected) throw handleError(new WalletNotConnectedError());
             return await adapter.requestAssets();
           }
         : undefined,
-    [adapter, handleError, connected]
+    [adapter, handleError, connected],
   );
 
   // Request private notes
   const requestPrivateNotes:
-    | MessageSignerWalletAdapterProps['requestPrivateNotes']
+    | MessageSignerWalletAdapterProps["requestPrivateNotes"]
     | undefined = useMemo(
     () =>
-      adapter && 'requestPrivateNotes' in adapter
+      adapter && "requestPrivateNotes" in adapter
         ? async (noteFilterType: NoteFilterTypes, noteIds?: string[]) => {
             if (!connected) throw handleError(new WalletNotConnectedError());
             return await adapter.requestPrivateNotes(noteFilterType, noteIds);
           }
         : undefined,
-    [adapter, handleError, connected]
+    [adapter, handleError, connected],
   );
 
   const signBytes: MessageSignerWalletAdapterProps['signBytes'] | undefined =
@@ -348,29 +348,29 @@ export const WalletProvider: FC<WalletProviderProps> = ({
     );
 
   const importPrivateNote:
-    | MessageSignerWalletAdapterProps['importPrivateNote']
+    | MessageSignerWalletAdapterProps["importPrivateNote"]
     | undefined = useMemo(
     () =>
-      adapter && 'importPrivateNote' in adapter
+      adapter && "importPrivateNote" in adapter
         ? async (note: Uint8Array) => {
             if (!connected) throw handleError(new WalletNotConnectedError());
             return await adapter.importPrivateNote(note);
           }
         : undefined,
-    [adapter, handleError, connected]
+    [adapter, handleError, connected],
   );
 
   const requestConsumableNotes:
-    | MessageSignerWalletAdapterProps['requestConsumableNotes']
+    | MessageSignerWalletAdapterProps["requestConsumableNotes"]
     | undefined = useMemo(
     () =>
-      adapter && 'requestConsumableNotes' in adapter
+      adapter && "requestConsumableNotes" in adapter
         ? async () => {
             if (!connected) throw handleError(new WalletNotConnectedError());
             return await adapter.requestConsumableNotes();
           }
         : undefined,
-    [adapter, handleError, connected]
+    [adapter, handleError, connected],
   );
 
   const waitForTransaction:

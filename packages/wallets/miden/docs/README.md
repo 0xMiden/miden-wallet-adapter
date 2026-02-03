@@ -1,8 +1,8 @@
-**@demox-labs/miden-wallet-adapter-miden**
+**@miden-sdk/miden-wallet-adapter-miden**
 
 ***
 
-# @demox-labs/miden-wallet-adapter-miden
+# @miden-sdk/miden-wallet-adapter-miden
 
 ## Classes
 

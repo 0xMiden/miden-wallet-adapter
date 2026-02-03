@@ -1,18 +1,12 @@
-import type { FC } from 'react';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
-import type { ButtonProps } from './Button';
-import { Button } from './Button';
-import { useWalletModal } from './useWalletModal';
-import { WalletConnectButton } from './WalletConnectButton';
-import { WalletIcon } from './WalletIcon';
-import { WalletModalButton } from './WalletModalButton';
+import type { FC } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useWallet } from "@miden-sdk/miden-wallet-adapter-react";
+import type { ButtonProps } from "./Button";
+import { Button } from "./Button";
+import { useWalletModal } from "./useWalletModal";
+import { WalletConnectButton } from "./WalletConnectButton";
+import { WalletIcon } from "./WalletIcon";
+import { WalletModalButton } from "./WalletModalButton";
 
 export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
   const { address, wallet, disconnect } = useWallet();
@@ -25,7 +19,7 @@ export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
     if (children) return children;
     if (!wallet || !address) return null;
 
-    const underscoreIndex = address.indexOf('_');
+    const underscoreIndex = address.indexOf("_");
     const frontPart = address.slice(0, 6);
     const middlePart = address.slice(underscoreIndex - 4, underscoreIndex);
     return `${frontPart}...${middlePart}`;
@@ -62,12 +56,12 @@ export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
       closeDropdown();
     };
 
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
 
     return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
     };
   }, [ref, closeDropdown]);
 
@@ -82,12 +76,12 @@ export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
         aria-expanded={active}
         className="wallet-adapter-button-trigger"
         style={{
-          pointerEvents: active ? 'none' : 'auto',
-          width: '100%',
-          backgroundColor: '#FFFFFF',
-          border: '1px solid #D7D7D7',
-          color: 'black',
-          ...props.style
+          pointerEvents: active ? "none" : "auto",
+          width: "100%",
+          backgroundColor: "#FFFFFF",
+          border: "1px solid #D7D7D7",
+          color: "black",
+          ...props.style,
         }}
         onClick={openDropdown}
         startIcon={<WalletIcon wallet={wallet} />}
@@ -98,7 +92,7 @@ export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
       <ul
         aria-label="dropdown-list"
         className={`wallet-adapter-dropdown-list ${
-          active && 'wallet-adapter-dropdown-list-active'
+          active && "wallet-adapter-dropdown-list-active"
         }`}
         ref={ref}
         role="menu"
@@ -108,7 +102,7 @@ export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
           className="wallet-adapter-dropdown-list-item"
           role="menuitem"
         >
-          {copied ? 'Copied' : 'Copy address'}
+          {copied ? "Copied" : "Copy address"}
         </li>
         <li
           onClick={openModal}

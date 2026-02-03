@@ -1,8 +1,8 @@
-import type { FC, MouseEventHandler } from 'react';
-import { WalletReadyState } from '@demox-labs/miden-wallet-adapter-base';
-import { Wallet } from '@demox-labs/miden-wallet-adapter-react';
-import { Button } from './Button';
-import { WalletIcon } from './WalletIcon';
+import type { FC, MouseEventHandler } from "react";
+import { WalletReadyState } from "@miden-sdk/miden-wallet-adapter-base";
+import { Wallet } from "@miden-sdk/miden-wallet-adapter-react";
+import { Button } from "./Button";
+import { WalletIcon } from "./WalletIcon";
 
 export interface WalletListItemProps {
   handleClick: MouseEventHandler<HTMLButtonElement>;

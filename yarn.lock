@@ -16,74 +16,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@demox-labs/miden-wallet-adapter-base@workspace:^, @demox-labs/miden-wallet-adapter-base@workspace:packages/core/base":
-  version: 0.0.0-use.local
-  resolution: "@demox-labs/miden-wallet-adapter-base@workspace:packages/core/base"
-  dependencies:
-    eventemitter3: "npm:^5.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@demox-labs/miden-wallet-adapter-miden@workspace:^, @demox-labs/miden-wallet-adapter-miden@workspace:packages/wallets/miden":
-  version: 0.0.0-use.local
-  resolution: "@demox-labs/miden-wallet-adapter-miden@workspace:packages/wallets/miden"
-  dependencies:
-    "@demox-labs/miden-wallet-adapter-base": "workspace:^"
-    nanoid: "npm:^5.0.9"
-  peerDependencies:
-    typescript: ^5.0.0
-  languageName: unknown
-  linkType: soft
-
-"@demox-labs/miden-wallet-adapter-react@workspace:^, @demox-labs/miden-wallet-adapter-react@workspace:packages/core/react":
-  version: 0.0.0-use.local
-  resolution: "@demox-labs/miden-wallet-adapter-react@workspace:packages/core/react"
-  dependencies:
-    "@demox-labs/miden-wallet-adapter-base": "workspace:^"
-    react: "npm:^19.1.1"
-  peerDependencies:
-    react: ^19.1.1
-  languageName: unknown
-  linkType: soft
-
-"@demox-labs/miden-wallet-adapter-reactui@workspace:^, @demox-labs/miden-wallet-adapter-reactui@workspace:packages/ui":
-  version: 0.0.0-use.local
-  resolution: "@demox-labs/miden-wallet-adapter-reactui@workspace:packages/ui"
-  dependencies:
-    "@demox-labs/miden-wallet-adapter-base": "workspace:^"
-    "@demox-labs/miden-wallet-adapter-react": "workspace:^"
-    "@types/react-dom": "npm:^19.0.4"
-    copyfiles: "npm:^2.4.1"
-    react: "npm:^19.1.1"
-    react-dom: "npm:^19.1.1"
-  peerDependencies:
-    "@types/react": ^19.0.0
-    "@types/react-dom": ^19.0.0
-    react: ^19.1.1
-    react-dom: ^19.1.1
-  languageName: unknown
-  linkType: soft
-
-"@demox-labs/miden-wallet-adapter@workspace:packages/all":
-  version: 0.0.0-use.local
-  resolution: "@demox-labs/miden-wallet-adapter@workspace:packages/all"
-  dependencies:
-    "@demox-labs/miden-wallet-adapter-base": "workspace:^"
-    "@demox-labs/miden-wallet-adapter-miden": "workspace:^"
-    "@demox-labs/miden-wallet-adapter-react": "workspace:^"
-    "@demox-labs/miden-wallet-adapter-reactui": "workspace:^"
-    "@types/react-dom": "npm:^19.0.4"
-    copyfiles: "npm:^2.4.1"
-    react: "npm:^19.1.1"
-    react-dom: "npm:^19.1.1"
-  peerDependencies:
-    "@types/react": ^19.0.0
-    "@types/react-dom": ^19.0.0
-    react: ^19.1.1
-    react-dom: ^19.1.1
-  languageName: unknown
-  linkType: soft
-
 "@gerrit0/mini-shiki@npm:^3.9.0":
   version: 3.11.0
   resolution: "@gerrit0/mini-shiki@npm:3.11.0"
@@ -126,6 +58,74 @@ __metadata:
   checksum: 10c0/b1bf42535d49f11dc137f18d5e4e63a28c5569de438a221c369483731e9dac9fb797af554e8bf02b6192d1e5eba6e6402cf93900c3d0ac86391d00d04876789e
   languageName: node
   linkType: hard
+
+"@miden-sdk/miden-wallet-adapter-base@workspace:^, @miden-sdk/miden-wallet-adapter-base@workspace:packages/core/base":
+  version: 0.0.0-use.local
+  resolution: "@miden-sdk/miden-wallet-adapter-base@workspace:packages/core/base"
+  dependencies:
+    eventemitter3: "npm:^5.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@miden-sdk/miden-wallet-adapter-miden@workspace:^, @miden-sdk/miden-wallet-adapter-miden@workspace:packages/wallets/miden":
+  version: 0.0.0-use.local
+  resolution: "@miden-sdk/miden-wallet-adapter-miden@workspace:packages/wallets/miden"
+  dependencies:
+    "@miden-sdk/miden-wallet-adapter-base": "workspace:^"
+    nanoid: "npm:^5.0.9"
+  peerDependencies:
+    typescript: ^5.0.0
+  languageName: unknown
+  linkType: soft
+
+"@miden-sdk/miden-wallet-adapter-react@workspace:^, @miden-sdk/miden-wallet-adapter-react@workspace:packages/core/react":
+  version: 0.0.0-use.local
+  resolution: "@miden-sdk/miden-wallet-adapter-react@workspace:packages/core/react"
+  dependencies:
+    "@miden-sdk/miden-wallet-adapter-base": "workspace:^"
+    react: "npm:^19.1.1"
+  peerDependencies:
+    react: ^19.1.1
+  languageName: unknown
+  linkType: soft
+
+"@miden-sdk/miden-wallet-adapter-reactui@workspace:^, @miden-sdk/miden-wallet-adapter-reactui@workspace:packages/ui":
+  version: 0.0.0-use.local
+  resolution: "@miden-sdk/miden-wallet-adapter-reactui@workspace:packages/ui"
+  dependencies:
+    "@miden-sdk/miden-wallet-adapter-base": "workspace:^"
+    "@miden-sdk/miden-wallet-adapter-react": "workspace:^"
+    "@types/react-dom": "npm:^19.0.4"
+    copyfiles: "npm:^2.4.1"
+    react: "npm:^19.1.1"
+    react-dom: "npm:^19.1.1"
+  peerDependencies:
+    "@types/react": ^19.0.0
+    "@types/react-dom": ^19.0.0
+    react: ^19.1.1
+    react-dom: ^19.1.1
+  languageName: unknown
+  linkType: soft
+
+"@miden-sdk/miden-wallet-adapter@workspace:packages/all":
+  version: 0.0.0-use.local
+  resolution: "@miden-sdk/miden-wallet-adapter@workspace:packages/all"
+  dependencies:
+    "@miden-sdk/miden-wallet-adapter-base": "workspace:^"
+    "@miden-sdk/miden-wallet-adapter-miden": "workspace:^"
+    "@miden-sdk/miden-wallet-adapter-react": "workspace:^"
+    "@miden-sdk/miden-wallet-adapter-reactui": "workspace:^"
+    "@types/react-dom": "npm:^19.0.4"
+    copyfiles: "npm:^2.4.1"
+    react: "npm:^19.1.1"
+    react-dom: "npm:^19.1.1"
+  peerDependencies:
+    "@types/react": ^19.0.0
+    "@types/react-dom": ^19.0.0
+    react: ^19.1.1
+    react-dom: ^19.1.1
+  languageName: unknown
+  linkType: soft
 
 "@rollup/plugin-typescript@npm:^12.3.0":
   version: 12.3.0
