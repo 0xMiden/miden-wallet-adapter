@@ -269,12 +269,12 @@ export class MidenWalletAdapter extends BaseMessageSignerWalletAdapter {
 
   async waitForTransaction(
     txId: string,
-    interval?: number
+    timeout?: number
   ): Promise<TransactionOutput> {
     try {
       const wallet = this._wallet;
       if (!wallet || !this.address) throw new WalletNotConnectedError();
-      const result = await wallet.waitForTransaction(txId, interval);
+      const result = await wallet.waitForTransaction(txId, timeout);
       if ('errorMessage' in result) {
         throw new WalletTransactionError(result.errorMessage);
       }

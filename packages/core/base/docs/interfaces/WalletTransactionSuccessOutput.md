@@ -2,9 +2,9 @@
 
 ***
 
-[@demox-labs/miden-wallet-adapter-base](../README.md) / WalletTransactionSuccessOuput
+[@demox-labs/miden-wallet-adapter-base](../README.md) / WalletTransactionSuccessOutput
 
-# Interface: WalletTransactionSuccessOuput
+# Interface: WalletTransactionSuccessOutput
 
 ## Properties
 

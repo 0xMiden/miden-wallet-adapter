@@ -693,7 +693,7 @@ Remove the listeners of a given event.
 
 ### waitForTransaction()
 
-> **waitForTransaction**(`txId`, `interval?`): `Promise`\<`TransactionOutput`\>
+> **waitForTransaction**(`txId`, `timeout?`): `Promise`\<`TransactionOutput`\>
 
 #### Parameters
 
@@ -701,7 +701,7 @@ Remove the listeners of a given event.
 
 `string`
 
-##### interval?
+##### timeout?
 
 `number`
 

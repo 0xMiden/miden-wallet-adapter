@@ -2,7 +2,7 @@
 
 ## 2025-12-31
 
-## Features
+### Features
 
 * Add `waitForTransaction` which awaits the transaction generation process.
 

@@ -63,7 +63,7 @@
 - [TransactionOutput](interfaces/TransactionOutput.md)
 - [WalletAdapterEvents](interfaces/WalletAdapterEvents.md)
 - [WalletAdapterProps](interfaces/WalletAdapterProps.md)
-- [WalletTransactionSuccessOuput](interfaces/WalletTransactionSuccessOuput.md)
+- [WalletTransactionSuccessOutput](interfaces/WalletTransactionSuccessOutput.md)
 
 ## Type Aliases
 
