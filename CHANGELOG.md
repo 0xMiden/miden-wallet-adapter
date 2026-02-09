@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-02-09
+
+### Features
+
+* Add `MidenFiSignerProvider` to bridge wallet adapter with the unified signer interface from `@miden-sdk/react`
+* Unify `MidenFiSignerProvider` with `WalletProvider` — default wallets to `[MidenWalletAdapter()]`, default `autoConnect` to `true`, add `appName` prop, and export `useMidenFiWallet` hook
+
+### Changes
+
+* [BREAKING] Rename package to `@miden-sdk/miden-wallet-adapter@0.13.0`
+* [BREAKING] Migrate peerDependencies to `@miden-sdk/miden-sdk@0.13.0`
+* Migrate to 0.13 client
+
 ## 2025-12-31
 
 ### Features
