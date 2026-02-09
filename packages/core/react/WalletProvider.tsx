@@ -18,7 +18,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 import type { Wallet } from './useWallet';
 import { WalletContext } from './useWallet';
-import type { NoteFilterTypes } from '@demox-labs/miden-sdk';
+import type { NoteFilterTypes } from '@miden-sdk/miden-sdk';
 
 export interface WalletProviderProps {
   children: ReactNode;

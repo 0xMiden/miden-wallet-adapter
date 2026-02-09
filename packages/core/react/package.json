@@ -22,7 +22,7 @@
     "@demox-labs/miden-wallet-adapter-miden": "workspace:^"
   },
   "devDependencies": {
-    "@demox-labs/miden-sdk": "^0.12.5",
+    "@miden-sdk/miden-sdk": "^0.13.0",
     "@miden-sdk/react": "^0.13.0",
     "@testing-library/react": "^14.0.0",
     "jsdom": "^24.0.0",

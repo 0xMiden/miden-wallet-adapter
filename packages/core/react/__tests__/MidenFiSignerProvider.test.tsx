@@ -48,7 +48,7 @@ vi.mock('@miden-sdk/react', () => ({
   SignerContext: React.createContext(null),
 }));
 
-vi.mock('@demox-labs/miden-sdk', () => ({
+vi.mock('@miden-sdk/miden-sdk', () => ({
   AccountStorageMode: {
     public: vi.fn(() => ({ toString: () => 'public' })),
     private: vi.fn(() => ({ toString: () => 'private' })),

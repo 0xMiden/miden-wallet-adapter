@@ -1,4 +1,4 @@
-import { Note, type NoteFilterTypes } from '@demox-labs/miden-sdk';
+import { Note, type NoteFilterTypes } from '@miden-sdk/miden-sdk';
 import {
   AllowedPrivateData,
   BaseMessageSignerWalletAdapter,

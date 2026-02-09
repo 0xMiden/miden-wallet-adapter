@@ -30,7 +30,7 @@ import {
   type InputNoteDetails,
   type TransactionOutput,
 } from '@demox-labs/miden-wallet-adapter-base';
-import type { NoteFilterTypes } from '@demox-labs/miden-sdk';
+import type { NoteFilterTypes } from '@miden-sdk/miden-sdk';
 import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { useLocalStorage } from './useLocalStorage';
 
@@ -557,7 +557,7 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
         };
 
         if (!cancelled) {
-          const { AccountStorageMode } = await import('@demox-labs/miden-sdk');
+          const { AccountStorageMode } = await import('@miden-sdk/miden-sdk');
 
           setSignerContext({
             signCb,
