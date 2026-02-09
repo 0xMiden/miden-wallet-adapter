@@ -22,7 +22,7 @@ import {
   TransactionOutput,
   WalletTransactionOutput,
   b64ToU8,
-} from '@demox-labs/miden-wallet-adapter-base';
+} from '@miden-sdk/miden-wallet-adapter-base';
 
 export interface MidenWalletEvents {
   connect(...args: unknown[]): unknown;

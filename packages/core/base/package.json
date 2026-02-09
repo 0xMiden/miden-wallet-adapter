@@ -1,5 +1,5 @@
 {
-  "name": "@demox-labs/miden-wallet-adapter-base",
+  "name": "@miden-sdk/miden-wallet-adapter-base",
   "version": "0.10.0",
   "description": "Core infrastructure for connecting Miden-compatible wallets to your dApp.",
   "module": "dist/index.js",

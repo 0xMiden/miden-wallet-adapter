@@ -1,5 +1,5 @@
 {
-  "name": "@miden-sdk/miden-wallet-adapter",
+  "name": "@miden-sdk/miden-wallet-adapter-miden",
   "version": "0.13.0",
   "description": "Miden wallet adapter for the Miden Wallet.",
   "module": "dist/index.js",
@@ -11,7 +11,7 @@
   "author": "Demox Labs",
   "license": "MIT",
   "dependencies": {
-    "@demox-labs/miden-wallet-adapter-base": "workspace:^",
+    "@miden-sdk/miden-wallet-adapter-base": "workspace:^",
     "nanoid": "^5.0.9"
   },
   "scripts": {

@@ -37,7 +37,7 @@ const createMockAdapter = (overrides = {}) => {
 let mockAdapter = createMockAdapter();
 
 // Mock modules before imports
-vi.mock('@demox-labs/miden-wallet-adapter-miden', () => ({
+vi.mock('@miden-sdk/miden-wallet-adapter-miden', () => ({
   MidenWalletAdapter: vi.fn().mockImplementation((config) => {
     mockAdapter._config = config;
     return mockAdapter;
@@ -55,7 +55,7 @@ vi.mock('@miden-sdk/miden-sdk', () => ({
   },
 }));
 
-vi.mock('@demox-labs/miden-wallet-adapter-base', () => ({
+vi.mock('@miden-sdk/miden-wallet-adapter-base', () => ({
   PrivateDataPermission: {
     UponRequest: 'UponRequest',
     Allowed: 'Allowed',
@@ -97,7 +97,7 @@ import {
   MidenFiSignerProvider,
   useMidenFiWallet,
 } from '../MidenFiSignerProvider';
-import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
+import { MidenWalletAdapter } from '@miden-sdk/miden-wallet-adapter-miden';
 
 // Test helpers
 const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));

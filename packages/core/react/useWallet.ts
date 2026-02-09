@@ -9,7 +9,7 @@ import {
   WalletAdapterNetwork,
   WalletName,
   WalletReadyState,
-} from '@demox-labs/miden-wallet-adapter-base';
+} from '@miden-sdk/miden-wallet-adapter-base';
 import type { NoteFilterTypes } from '@miden-sdk/miden-sdk';
 
 export interface Wallet {

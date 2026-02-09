@@ -29,9 +29,9 @@ import {
   type Asset,
   type InputNoteDetails,
   type TransactionOutput,
-} from '@demox-labs/miden-wallet-adapter-base';
+} from '@miden-sdk/miden-wallet-adapter-base';
 import type { NoteFilterTypes } from '@miden-sdk/miden-sdk';
-import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
+import { MidenWalletAdapter } from '@miden-sdk/miden-wallet-adapter-miden';
 import { useLocalStorage } from './useLocalStorage';
 
 // TYPES
@@ -232,19 +232,31 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
       );
   }, [adapters]);
 
-  // When the selected wallet changes, initialize the state
+  // When the selected wallet changes, initialize the state.
+  // Use a functional update to bail out when nothing has actually changed,
+  // preventing unnecessary re-renders that cause WASM concurrency races.
   useEffect(() => {
-    const wallet = name && wallets.find(({ adapter }) => adapter.name === name);
-    if (wallet) {
-      setState({
-        wallet,
-        adapter: wallet.adapter,
-        connected: wallet.adapter.connected,
-        address: wallet.adapter.address,
-        publicKey: wallet.adapter.publicKey,
+    const found = name && wallets.find(({ adapter }) => adapter.name === name);
+    if (found) {
+      setState((prev) => {
+        if (
+          prev.wallet === found &&
+          prev.adapter === found.adapter &&
+          prev.connected === found.adapter.connected &&
+          prev.address === found.adapter.address &&
+          prev.publicKey === found.adapter.publicKey
+        )
+          return prev;
+        return {
+          wallet: found,
+          adapter: found.adapter,
+          connected: found.adapter.connected,
+          address: found.adapter.address,
+          publicKey: found.adapter.publicKey,
+        };
       });
     } else {
-      setState(initialState);
+      setState((prev) => (prev === initialState ? prev : initialState));
     }
   }, [name, wallets]);
 
@@ -258,15 +270,24 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
     return () => window.removeEventListener('beforeunload', listener);
   }, [isUnloading]);
 
-  // Handle the adapter's connect event
+  // Handle the adapter's connect event.
+  // Functional update bails out when values haven't changed to prevent re-render loops.
   const handleConnect = useCallback(() => {
     if (!adapter) return;
-    setState((state) => ({
-      ...state,
-      connected: adapter.connected,
-      address: adapter.address,
-      publicKey: adapter.publicKey,
-    }));
+    setState((prev) => {
+      if (
+        prev.connected === adapter.connected &&
+        prev.address === adapter.address &&
+        prev.publicKey === adapter.publicKey
+      )
+        return prev;
+      return {
+        ...prev,
+        connected: adapter.connected,
+        address: adapter.address,
+        publicKey: adapter.publicKey,
+      };
+    });
   }, [adapter]);
 
   // Handle the adapter's disconnect event
@@ -524,45 +545,78 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
     [adapter, handleError, connected]
   );
 
-  // Build SignerContext value
-  const [signerContext, setSignerContext] = useState<SignerContextValue | null>(
-    null
+  // Build SignerContext value.
+  //
+  // CRITICAL: signerContext MUST be referentially stable.  MidenProvider's init
+  // effect has signerContext in its deps — every new object re-triggers initClient
+  // which does async WASM work.  Two concurrent initClient calls cause the
+  // "recursive use of an object" crash.
+  //
+  // We keep a single mutable ref and only call setSignerContext when the ref
+  // identity actually needs to change (disconnected ↔ connected, or address change).
+  //
+  // Initialise as {isConnected:false} rather than null so MidenProvider's init
+  // effect hits the early-return path instead of creating a local-keystore client
+  // that races with our buildContext's WASM operations.
+
+  // Keep signBytes in a ref so buildContext doesn't re-run when its identity changes.
+  const signBytesRef = useRef(signBytes);
+  useEffect(() => { signBytesRef.current = signBytes; }, [signBytes]);
+  const connectRef = useRef(connect);
+  useEffect(() => { connectRef.current = connect; }, [connect]);
+  const disconnectRef = useRef(disconnect);
+  useEffect(() => { disconnectRef.current = disconnect; }, [disconnect]);
+
+  const disconnectedCtx = useRef<SignerContextValue>({
+    signCb: async () => { throw new Error('MidenFi wallet not connected'); },
+    accountConfig: null as any,
+    storeName: '',
+    name: 'MidenFi',
+    isConnected: false,
+    connect: connectRef.current,
+    disconnect: disconnectRef.current,
+  });
+
+  // The connected context ref — reused across renders to maintain referential identity.
+  const connectedCtxRef = useRef<SignerContextValue | null>(null);
+  // Track which address the connected context was built for.
+  const connectedAddressRef = useRef<string | null>(null);
+
+  const [signerContext, setSignerContext] = useState<SignerContextValue>(
+    disconnectedCtx.current
   );
 
   useEffect(() => {
     let cancelled = false;
 
     async function buildContext() {
-      if (!connected || !publicKey || !address || !signBytes) {
-        // Not connected - provide context with connect/disconnect but no signing capability
-        setSignerContext({
-          signCb: async () => {
-            throw new Error('MidenFi wallet not connected');
-          },
-          accountConfig: null as any,
-          storeName: '',
-          name: 'MidenFi',
-          isConnected: false,
-          connect,
-          disconnect,
-        });
+      if (!connected || !publicKey || !address || !signBytesRef.current) {
+        // Already disconnected — don't set state again (same ref = no re-render).
+        if (connectedCtxRef.current !== null) {
+          connectedCtxRef.current = null;
+          connectedAddressRef.current = null;
+          setSignerContext(disconnectedCtx.current);
+        }
+        return;
+      }
+
+      // Already built for this address — reuse existing context (same ref).
+      if (connectedCtxRef.current && connectedAddressRef.current === address) {
         return;
       }
 
       try {
-        // Connected - build full context with signing capability
-        const signCb = async (_: Uint8Array, signingInputs: Uint8Array) => {
-          const result = await signBytes(signingInputs, 'signingInputs');
-          return result;
-        };
-
         if (!cancelled) {
           const { AccountStorageMode } = await import('@miden-sdk/miden-sdk');
 
-          setSignerContext({
+          const signCb = async (_: Uint8Array, signingInputs: Uint8Array) => {
+            const result = await signBytesRef.current!(signingInputs, 'signingInputs');
+            return result;
+          };
+
+          const ctx: SignerContextValue = {
             signCb,
             accountConfig: {
-              // publicKey from wallet adapter is already the commitment
               publicKeyCommitment: publicKey,
               accountType: 'RegularAccountImmutableCode',
               storageMode: AccountStorageMode.public(),
@@ -570,24 +624,20 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
             storeName: `midenfi_${address}`,
             name: 'MidenFi',
             isConnected: true,
-            connect,
-            disconnect,
-          });
+            connect: connectRef.current,
+            disconnect: disconnectRef.current,
+          };
+
+          connectedCtxRef.current = ctx;
+          connectedAddressRef.current = address;
+          setSignerContext(ctx);
         }
       } catch (error) {
         console.error('Failed to build MidenFi signer context:', error);
         if (!cancelled) {
-          setSignerContext({
-            signCb: async () => {
-              throw new Error('MidenFi wallet not connected');
-            },
-            accountConfig: null as any,
-            storeName: '',
-            name: 'MidenFi',
-            isConnected: false,
-            connect,
-            disconnect,
-          });
+          connectedCtxRef.current = null;
+          connectedAddressRef.current = null;
+          setSignerContext(disconnectedCtx.current);
         }
       }
     }
@@ -596,7 +646,7 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
     return () => {
       cancelled = true;
     };
-  }, [connected, publicKey, address, signBytes, connect, disconnect]);
+  }, [connected, publicKey, address]);
 
   const walletContextValue = useMemo(
     () => ({

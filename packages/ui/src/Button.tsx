@@ -2,7 +2,7 @@ import {
   AllowedPrivateData,
   PrivateDataPermission,
   WalletAdapterNetwork,
-} from '@demox-labs/miden-wallet-adapter-base';
+} from '@miden-sdk/miden-wallet-adapter-base';
 import type {
   CSSProperties,
   FC,
