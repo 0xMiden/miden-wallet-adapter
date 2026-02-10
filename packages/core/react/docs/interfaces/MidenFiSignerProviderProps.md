@@ -2,9 +2,9 @@
 
 ***
 
-[@miden-sdk/miden-wallet-adapter-react](../README.md) / WalletProviderProps
+[@miden-sdk/miden-wallet-adapter-react](../README.md) / MidenFiSignerProviderProps
 
-# Interface: WalletProviderProps
+# Interface: MidenFiSignerProviderProps
 
 ## Properties
 
@@ -12,11 +12,23 @@
 
 > `optional` **allowedPrivateData**: `AllowedPrivateData`
 
+Allowed private data types
+
+***
+
+### appName?
+
+> `optional` **appName**: `string`
+
+App name passed to the default MidenWalletAdapter
+
 ***
 
 ### autoConnect?
 
 > `optional` **autoConnect**: `boolean`
+
+Auto-connect to previously selected wallet on mount. Defaults to true
 
 ***
 
@@ -30,17 +42,23 @@
 
 > `optional` **localStorageKey**: `string`
 
+LocalStorage key for persisting wallet selection
+
 ***
 
 ### network?
 
 > `optional` **network**: `WalletAdapterNetwork`
 
+Network to connect to
+
 ***
 
 ### onError()?
 
 > `optional` **onError**: (`error`) => `void`
+
+Error handler
 
 #### Parameters
 
@@ -58,8 +76,12 @@
 
 > `optional` **privateDataPermission**: `PrivateDataPermission`
 
+Private data permission level
+
 ***
 
-### wallets
+### wallets?
 
-> **wallets**: `Adapter`[]
+> `optional` **wallets**: `Adapter`[]
+
+Wallet adapters to use. Defaults to [MidenWalletAdapter]

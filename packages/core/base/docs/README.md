@@ -1,12 +1,12 @@
-**@demox-labs/miden-wallet-adapter-base**
+**@miden-sdk/miden-wallet-adapter-base**
 
 ***
 
-# @demox-labs/miden-wallet-adapter-base
+# @miden-sdk/miden-wallet-adapter-base
 
 ## Namespaces
 
-- [EventEmitter](@demox-labs/namespaces/EventEmitter/README.md)
+- [EventEmitter](@miden-sdk/namespaces/EventEmitter/README.md)
 
 ## Enumerations
 

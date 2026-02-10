@@ -1,13 +1,13 @@
-[**@demox-labs/miden-wallet-adapter-react**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-react**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-react](../README.md) / useWallet
+[@miden-sdk/miden-wallet-adapter-react](../README.md) / useWallet
 
 # Function: useWallet()
 
-> **useWallet**(): [`WalletContextState`](../interfaces/WalletContextState.md)
+> **useWallet**(): `WalletContextState`
 
 ## Returns
 
-[`WalletContextState`](../interfaces/WalletContextState.md)
+`WalletContextState`

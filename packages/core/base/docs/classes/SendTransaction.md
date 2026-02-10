@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-base**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-base**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-base](../README.md) / SendTransaction
+[@miden-sdk/miden-wallet-adapter-base](../README.md) / SendTransaction
 
 # Class: SendTransaction
 

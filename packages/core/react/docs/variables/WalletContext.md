@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-react**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-react**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-react](../README.md) / WalletContext
+[@miden-sdk/miden-wallet-adapter-react](../README.md) / WalletContext
 
 # Variable: WalletContext
 
