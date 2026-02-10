@@ -30,7 +30,7 @@ export default defineConfig({
       '@miden-sdk/miden-wallet-adapter-react': path.resolve(packages, 'core', 'react', 'index.ts'),
       '@miden-sdk/miden-wallet-adapter-miden': path.resolve(packages, 'wallets', 'miden', 'index.ts'),
       '@miden-sdk/miden-sdk': path.resolve(__dirname, '..', '..', 'node_modules', '@miden-sdk', 'miden-sdk'),
-      '@miden-sdk/react': path.resolve(process.env.HOME!, 'miden', 'miden-client', 'packages', 'react-sdk', 'src', 'index.ts'),
+      '@miden-sdk/react': path.resolve(__dirname, '..', '..', 'node_modules', '@miden-sdk', 'react'),
     },
     dedupe: ['@miden-sdk/miden-sdk', '@miden-sdk/react', 'react', 'react-dom'],
   },
