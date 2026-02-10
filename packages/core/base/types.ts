@@ -1,4 +1,4 @@
-import type { InputNoteState, Note, NoteType } from '@demox-labs/miden-sdk';
+import type { InputNoteState, Note, NoteType } from '@miden-sdk/miden-sdk';
 
 export enum WalletAdapterNetwork {
   Testnet = 'testnet',

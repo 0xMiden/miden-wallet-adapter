@@ -13,8 +13,8 @@ import {
   WalletAdapterNetwork,
   WalletName,
   WalletReadyState,
-} from '@demox-labs/miden-wallet-adapter-base';
-import { useWallet, Wallet } from '@demox-labs/miden-wallet-adapter-react';
+} from '@miden-sdk/miden-wallet-adapter-base';
+import { useWallet, Wallet } from '@miden-sdk/miden-wallet-adapter-react';
 import { useWalletModal } from './useWalletModal';
 import { WalletListItem } from './WalletListItem';
 import { DiscoverMidenMessage } from './DiscoverMidenMessage';

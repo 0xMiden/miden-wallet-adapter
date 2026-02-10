@@ -1,4 +1,4 @@
-import { Note, type NoteFilterTypes } from '@demox-labs/miden-sdk';
+import { Note, type NoteFilterTypes } from '@miden-sdk/miden-sdk';
 import {
   AllowedPrivateData,
   BaseMessageSignerWalletAdapter,
@@ -22,7 +22,7 @@ import {
   TransactionOutput,
   WalletTransactionOutput,
   b64ToU8,
-} from '@demox-labs/miden-wallet-adapter-base';
+} from '@miden-sdk/miden-wallet-adapter-base';
 
 export interface MidenWalletEvents {
   connect(...args: unknown[]): unknown;
