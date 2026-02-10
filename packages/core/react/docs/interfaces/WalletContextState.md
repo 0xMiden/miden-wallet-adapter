@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-react**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-react**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-react](../README.md) / WalletContextState
+[@miden-sdk/miden-wallet-adapter-react](../README.md) / WalletContextState
 
 # Interface: WalletContextState
 
@@ -38,9 +38,9 @@
 
 ***
 
-### importPrivateNote()
+### importPrivateNote()?
 
-> **importPrivateNote**: (`note`) => `Promise`\<`string`\>
+> `optional` **importPrivateNote**: (`note`) => `Promise`\<`string`\>
 
 #### Parameters
 
@@ -54,21 +54,15 @@
 
 ***
 
-### privateDataPermission?
-
-> `optional` **privateDataPermission**: `PrivateDataPermission`
-
-***
-
 ### publicKey
 
 > **publicKey**: `Uint8Array`\<`ArrayBufferLike`\>
 
 ***
 
-### requestAssets()
+### requestAssets()?
 
-> **requestAssets**: () => `Promise`\<`Asset`[]\>
+> `optional` **requestAssets**: () => `Promise`\<`Asset`[]\>
 
 #### Returns
 
@@ -76,9 +70,9 @@
 
 ***
 
-### requestConsumableNotes()
+### requestConsumableNotes()?
 
-> **requestConsumableNotes**: () => `Promise`\<`InputNoteDetails`[]\>
+> `optional` **requestConsumableNotes**: () => `Promise`\<`InputNoteDetails`[]\>
 
 #### Returns
 
@@ -86,9 +80,9 @@
 
 ***
 
-### requestConsume()
+### requestConsume()?
 
-> **requestConsume**: (`transaction`) => `Promise`\<`string`\>
+> `optional` **requestConsume**: (`transaction`) => `Promise`\<`string`\>
 
 #### Parameters
 
@@ -102,9 +96,9 @@
 
 ***
 
-### requestPrivateNotes()
+### requestPrivateNotes()?
 
-> **requestPrivateNotes**: (`noteFilterType`, `noteIds?`) => `Promise`\<`InputNoteDetails`[]\>
+> `optional` **requestPrivateNotes**: (`noteFilterType`, `noteIds?`) => `Promise`\<`InputNoteDetails`[]\>
 
 #### Parameters
 
@@ -122,9 +116,9 @@
 
 ***
 
-### requestSend()
+### requestSend()?
 
-> **requestSend**: (`transaction`) => `Promise`\<`string`\>
+> `optional` **requestSend**: (`transaction`) => `Promise`\<`string`\>
 
 #### Parameters
 
@@ -138,9 +132,9 @@
 
 ***
 
-### requestTransaction()
+### requestTransaction()?
 
-> **requestTransaction**: (`transaction`) => `Promise`\<`string`\>
+> `optional` **requestTransaction**: (`transaction`) => `Promise`\<`string`\>
 
 #### Parameters
 
@@ -154,9 +148,9 @@
 
 ***
 
-### signBytes()
+### signBytes()?
 
-> **signBytes**: (`data`, `kind`) => `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
+> `optional` **signBytes**: (`data`, `kind`) => `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
 
 #### Parameters
 
@@ -174,9 +168,9 @@
 
 ***
 
-### waitForTransaction()
+### waitForTransaction()?
 
-> **waitForTransaction**: (`txId`, `timeout?`) => `Promise`\<`TransactionOutput`\>
+> `optional` **waitForTransaction**: (`txId`, `timeout?`) => `Promise`\<`TransactionOutput`\>
 
 #### Parameters
 
@@ -208,21 +202,7 @@
 
 ### connect()
 
-> **connect**(`privateDataPermission`, `network`, `allowedPrivateData?`): `Promise`\<`void`\>
-
-#### Parameters
-
-##### privateDataPermission
-
-`PrivateDataPermission`
-
-##### network
-
-`WalletAdapterNetwork`
-
-##### allowedPrivateData?
-
-`AllowedPrivateData`
+> **connect**(): `Promise`\<`void`\>
 
 #### Returns
 

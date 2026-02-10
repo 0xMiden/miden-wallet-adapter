@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-miden**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-miden**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-miden](../README.md) / MidenWalletEvents
+[@miden-sdk/miden-wallet-adapter-miden](../README.md) / MidenWalletEvents
 
 # Interface: MidenWalletEvents
 

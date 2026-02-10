@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-reactui**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-reactui**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-reactui](../README.md) / WalletModalProvider
+[@miden-sdk/miden-wallet-adapter-reactui](../README.md) / WalletModalProvider
 
 # Variable: WalletModalProvider
 

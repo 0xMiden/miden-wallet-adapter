@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-base**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-base**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-base](../README.md) / EventEmitter
+[@miden-sdk/miden-wallet-adapter-base](../README.md) / EventEmitter
 
 # Class: EventEmitter\<EventTypes, Context\>
 
@@ -17,7 +17,7 @@ Minimal `EventEmitter` interface that is molded against the Node.js
 
 ### EventTypes
 
-`EventTypes` *extends* [`ValidEventTypes`](../@demox-labs/namespaces/EventEmitter/type-aliases/ValidEventTypes.md) = `string` \| `symbol`
+`EventTypes` *extends* [`ValidEventTypes`](../@miden-sdk/namespaces/EventEmitter/type-aliases/ValidEventTypes.md) = `string` \| `symbol`
 
 ### Context
 
@@ -59,7 +59,7 @@ Minimal `EventEmitter` interface that is molded against the Node.js
 
 ##### fn
 
-[`EventListener`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
+[`EventListener`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
 
 ##### context?
 
@@ -91,7 +91,7 @@ Calls each of the listeners registered for a given event.
 
 ##### args
 
-...`Parameters`\<[`EventListener`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>\>
+...`Parameters`\<[`EventListener`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>\>
 
 #### Returns
 
@@ -101,14 +101,14 @@ Calls each of the listeners registered for a given event.
 
 ### eventNames()
 
-> **eventNames**(): [`EventNames`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventNames.md)\<`EventTypes`\>[]
+> **eventNames**(): [`EventNames`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventNames.md)\<`EventTypes`\>[]
 
 Return an array listing the events for which the emitter has registered
 listeners.
 
 #### Returns
 
-[`EventNames`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventNames.md)\<`EventTypes`\>[]
+[`EventNames`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventNames.md)\<`EventTypes`\>[]
 
 ***
 
@@ -122,7 +122,7 @@ Return the number of listeners listening to a given event.
 
 ##### event
 
-[`EventNames`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventNames.md)\<`EventTypes`\>
+[`EventNames`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventNames.md)\<`EventTypes`\>
 
 #### Returns
 
@@ -132,7 +132,7 @@ Return the number of listeners listening to a given event.
 
 ### listeners()
 
-> **listeners**\<`T`\>(`event`): [`EventListener`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>[]
+> **listeners**\<`T`\>(`event`): [`EventListener`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>[]
 
 Return the listeners registered for a given event.
 
@@ -150,7 +150,7 @@ Return the listeners registered for a given event.
 
 #### Returns
 
-[`EventListener`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>[]
+[`EventListener`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>[]
 
 ***
 
@@ -172,7 +172,7 @@ Return the listeners registered for a given event.
 
 ##### fn?
 
-[`EventListener`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
+[`EventListener`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
 
 ##### context?
 
@@ -208,7 +208,7 @@ Add a listener for a given event.
 
 ##### fn
 
-[`EventListener`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
+[`EventListener`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
 
 ##### context?
 
@@ -240,7 +240,7 @@ Add a one-time listener for a given event.
 
 ##### fn
 
-[`EventListener`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
+[`EventListener`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
 
 ##### context?
 
@@ -262,7 +262,7 @@ Remove all listeners, or those of the specified event.
 
 ##### event?
 
-[`EventNames`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventNames.md)\<`EventTypes`\>
+[`EventNames`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventNames.md)\<`EventTypes`\>
 
 #### Returns
 
@@ -290,7 +290,7 @@ Remove the listeners of a given event.
 
 ##### fn?
 
-[`EventListener`](../@demox-labs/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
+[`EventListener`](../@miden-sdk/namespaces/EventEmitter/type-aliases/EventListener.md)\<`EventTypes`, `T`\>
 
 ##### context?
 

@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-base**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-base**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-base](../README.md) / TransactionOrVersionedTransaction
+[@miden-sdk/miden-wallet-adapter-base](../README.md) / TransactionOrVersionedTransaction
 
 # Type Alias: TransactionOrVersionedTransaction\<S\>
 

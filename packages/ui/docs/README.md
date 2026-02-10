@@ -1,8 +1,8 @@
-**@demox-labs/miden-wallet-adapter-reactui**
+**@miden-sdk/miden-wallet-adapter-reactui**
 
 ***
 
-# @demox-labs/miden-wallet-adapter-reactui
+# @miden-sdk/miden-wallet-adapter-reactui
 
 ## Interfaces
 

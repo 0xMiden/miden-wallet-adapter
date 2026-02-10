@@ -1,8 +1,8 @@
-[**@demox-labs/miden-wallet-adapter-base**](../README.md)
+[**@miden-sdk/miden-wallet-adapter-base**](../README.md)
 
 ***
 
-[@demox-labs/miden-wallet-adapter-base](../README.md) / BaseWalletAdapter
+[@miden-sdk/miden-wallet-adapter-base](../README.md) / BaseWalletAdapter
 
 # Abstract Class: BaseWalletAdapter\<Name\>
 
@@ -249,7 +249,7 @@ Calls each of the listeners registered for a given event.
 
 ##### args
 
-...[`ArgumentMap`](../@demox-labs/namespaces/EventEmitter/type-aliases/ArgumentMap.md)\<[`WalletAdapterEvents`](../interfaces/WalletAdapterEvents.md)\>\[`Extract`\<`T`, keyof [`WalletAdapterEvents`](../interfaces/WalletAdapterEvents.md)\>\]
+...[`ArgumentMap`](../@miden-sdk/namespaces/EventEmitter/type-aliases/ArgumentMap.md)\<[`WalletAdapterEvents`](../interfaces/WalletAdapterEvents.md)\>\[`Extract`\<`T`, keyof [`WalletAdapterEvents`](../interfaces/WalletAdapterEvents.md)\>\]
 
 #### Returns
 

@@ -112,10 +112,10 @@ async function getOtp() {
 }
 
 async function publishPackages() {
-  // Check for dry-run flag
   const isDryRun = process.argv.includes('--dry-run');
+  const useOtp = process.argv.includes('--otp');
   console.log(isDryRun ? 'DRY RUN MODE - No packages will be actually published' : '🚀 LIVE MODE - Packages will be published to npm');
-  const otp = isDryRun ? 'dry-run-otp' : await getOtp();
+  const otp = isDryRun ? null : useOtp ? await getOtp() : null;
 
   const packageUpdates = [];
 
@@ -149,13 +149,14 @@ async function publishPackages() {
         // Handle npm publish separately to include OTP
         if (isDryRun) {
           console.log(`DRY RUN: Would publish ${packageName}@${packageVersion}`);
-          await runCommand(dir, `yarn npm publish --dry-run --access=public`);
+          await runCommand(dir, `npm publish --dry-run --access=public`);
           console.log(`DRY RUN: Validation successful for ${packageName}@${packageVersion}`);
           packageUpdates.push(`${packageName}: New version ${packageVersion} (dry-run)`);
           return { published: true, packageName, packageVersion };
         } else {
           console.log(`Publishing ${packageName}@${packageVersion}...`);
-          await runCommand(dir, `yarn npm publish --otp=${otp} --access=public`);
+          const otpFlag = otp ? ` --otp=${otp}` : '';
+          await runCommand(dir, `npm publish${otpFlag} --access=public`);
           console.log(`Successfully published ${packageName}@${packageVersion}`);
           packageUpdates.push(`${packageName}: New version ${packageVersion}`);
           return { published: true, packageName, packageVersion };
