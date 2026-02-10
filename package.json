@@ -18,6 +18,7 @@
     "doc": "yarn workspaces foreach --all run doc",
     "lint": "yarn workspaces foreach --all run lint",
     "typecheck": "yarn workspaces foreach --all run typecheck",
+    "test": "yarn workspaces foreach --all run test",
     "reset": "yarn clean:all && yarn install",
     "publish:dry": "node util/publish.js --dry-run",
     "publish": "node util/publish.js"
