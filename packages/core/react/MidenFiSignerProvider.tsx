@@ -573,8 +573,8 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
     storeName: '',
     name: 'MidenFi',
     isConnected: false,
-    connect: connectRef.current,
-    disconnect: disconnectRef.current,
+    connect: (...args: Parameters<typeof connect>) => connectRef.current(...args),
+    disconnect: (...args: Parameters<typeof disconnect>) => disconnectRef.current(...args),
   });
 
   // The connected context ref — reused across renders to maintain referential identity.
