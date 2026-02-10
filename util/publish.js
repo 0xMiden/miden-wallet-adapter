@@ -1,4 +1,4 @@
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const path = require('path');
 const readline = require('readline');
 const fs = require('fs');
@@ -40,6 +40,23 @@ function runCommand(directory, command) {
       console.log(`Output from ${command} in ${directory}:`, stdout);
       resolve();
     });
+  });
+}
+
+function runInteractiveCommand(directory, command) {
+  return new Promise((resolve, reject) => {
+    const [cmd, ...args] = command.split(' ');
+    const child = spawn(cmd, args, {
+      cwd: path.resolve(directory),
+      stdio: 'inherit',
+    });
+    child.on('close', (code) => {
+      if (code !== 0) {
+        return reject(new Error(`Command failed: ${command} (exit code ${code})`));
+      }
+      resolve();
+    });
+    child.on('error', reject);
   });
 }
 
@@ -149,14 +166,14 @@ async function publishPackages() {
         // Handle npm publish separately to include OTP
         if (isDryRun) {
           console.log(`DRY RUN: Would publish ${packageName}@${packageVersion}`);
-          await runCommand(dir, `npm publish --dry-run --access=public`);
+          await runInteractiveCommand(dir, `npm publish --dry-run --access=public`);
           console.log(`DRY RUN: Validation successful for ${packageName}@${packageVersion}`);
           packageUpdates.push(`${packageName}: New version ${packageVersion} (dry-run)`);
           return { published: true, packageName, packageVersion };
         } else {
           console.log(`Publishing ${packageName}@${packageVersion}...`);
           const otpFlag = otp ? ` --otp=${otp}` : '';
-          await runCommand(dir, `npm publish${otpFlag} --access=public`);
+          await runInteractiveCommand(dir, `npm publish${otpFlag} --access=public`);
           console.log(`Successfully published ${packageName}@${packageVersion}`);
           packageUpdates.push(`${packageName}: New version ${packageVersion}`);
           return { published: true, packageName, packageVersion };

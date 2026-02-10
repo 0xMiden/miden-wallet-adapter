@@ -1,6 +1,6 @@
 # Miden Wallet Adapter
 
-[![npm version](https://badge.fury.io/js/@demox-labs%2Fmiden-wallet-adapter.svg)](https://badge.fury.io/js/@demox-labs%2Fmiden-wallet-adapter)
+[![npm version](https://badge.fury.io/js/@miden-sdk%2Fmiden-wallet-adapter.svg)](https://badge.fury.io/js/@miden-sdk%2Fmiden-wallet-adapter)
 
 The **Miden Wallet Adapter** package provides everything you need to integrate the Miden Wallet into your decentralized application (dApp) using React. This package bundles all the core functionality, React integration, UI components, and adapter implementation in a single convenient package.
 
@@ -8,13 +8,13 @@ The **Miden Wallet Adapter** package provides everything you need to integrate t
 
 ```bash
 # npm
-npm install @demox-labs/miden-wallet-adapter
+npm install @miden-sdk/miden-wallet-adapter
 
 # yarn
-yarn add @demox-labs/miden-wallet-adapter
+yarn add @miden-sdk/miden-wallet-adapter
 
 # pnpm
-pnpm add @demox-labs/miden-wallet-adapter
+pnpm add @miden-sdk/miden-wallet-adapter
 ```
 
 ### Peer Dependencies
@@ -37,9 +37,9 @@ import {
   WalletProvider,
   WalletModalProvider,
   MidenWalletAdapter,
-} from '@demox-labs/miden-wallet-adapter';
+} from '@miden-sdk/miden-wallet-adapter';
 
-import '@demox-labs/miden-wallet-adapter/styles.css';
+import '@miden-sdk/miden-wallet-adapter/styles.css';
 
 const wallets = [
   new MidenWalletAdapter({ appName: 'Your Miden App' }),
@@ -62,7 +62,7 @@ function App() {
 Use the `WalletMultiButton` for a complete wallet connection experience:
 
 ```tsx
-import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter';
+import { WalletMultiButton } from '@miden-sdk/miden-wallet-adapter';
 
 function Header() {
   return (
@@ -81,7 +81,7 @@ Access wallet state and functionality with the `useWallet` hook:
 #### Send Transaction
 
 ```tsx
-import { useWallet, SendTransaction } from '@demox-labs/miden-wallet-adapter';
+import { useWallet, SendTransaction } from '@miden-sdk/miden-wallet-adapter';
 
 function SendComponent() {
   const { wallet, address, connected } = useWallet();
@@ -121,7 +121,7 @@ function SendComponent() {
 #### Custom Transaction
 
 ```tsx
-import { useWallet, CustomTransaction } from '@demox-labs/miden-wallet-adapter';
+import { useWallet, CustomTransaction } from '@miden-sdk/miden-wallet-adapter';
 
 function CustomTransactionComponent() {
   const { wallet, address, requestTransaction } = useWallet();
@@ -144,7 +144,7 @@ function CustomTransactionComponent() {
 #### Requesting assets and private notes
 
 ```tsx
-import { useWallet } from '@demox-labs/miden-wallet-adapter';
+import { useWallet } from '@miden-sdk/miden-wallet-adapter';
 
 function AssetsAndNotesComponent() {
   const { wallet, address, requestAssets, requestPrivateNotes } = useWallet();
@@ -203,16 +203,16 @@ If you prefer more granular control, you can install individual packages:
 
 ```bash
 # Core infrastructure only
-npm install @demox-labs/miden-wallet-adapter-base
+npm install @miden-sdk/miden-wallet-adapter-base
 
 # React integration
-npm install @demox-labs/miden-wallet-adapter-react
+npm install @miden-sdk/miden-wallet-adapter-react
 
 # UI components
-npm install @demox-labs/miden-wallet-adapter-reactui
+npm install @miden-sdk/miden-wallet-adapter-reactui
 
 # Miden wallet adapter
-npm install @demox-labs/miden-wallet-adapter-miden
+npm install @miden-sdk/miden-wallet-adapter-miden
 ```
 
 ## Development
@@ -238,5 +238,5 @@ MIT
 
 ## Support
 
-- [GitHub Issues](https://github.com/demox-labs/miden-wallet-adapter/issues)
-- [Documentation](https://github.com/demox-labs/miden-wallet-adapter) 
+- [GitHub Issues](https://github.com/0xMiden/miden-wallet-adapter/issues)
+- [Documentation](https://github.com/0xMiden/miden-wallet-adapter) 
