@@ -79,6 +79,50 @@ function getPackageInfo(directory) {
   };
 }
 
+// Build a map of workspace package names to their versions
+function buildWorkspaceVersionMap() {
+  const versionMap = {};
+  for (const level of buildOrder) {
+    for (const dir of level) {
+      const { name, version } = getPackageInfo(dir);
+      versionMap[name] = version;
+    }
+  }
+  return versionMap;
+}
+
+// Replace workspace:^ references with actual versions in package.json before npm publish.
+// Returns the original package.json content so it can be restored after publish.
+function resolveWorkspaceProtocol(directory, versionMap) {
+  const packageJsonPath = path.resolve(directory, 'package.json');
+  const original = fs.readFileSync(packageJsonPath, 'utf8');
+  const pkg = JSON.parse(original);
+
+  for (const depField of ['dependencies', 'devDependencies', 'peerDependencies']) {
+    if (!pkg[depField]) continue;
+    for (const [depName, depVersion] of Object.entries(pkg[depField])) {
+      if (typeof depVersion === 'string' && depVersion.startsWith('workspace:')) {
+        const resolvedVersion = versionMap[depName];
+        if (!resolvedVersion) {
+          throw new Error(`Cannot resolve workspace dependency "${depName}" in ${directory}: not found in workspace`);
+        }
+        // workspace:^ → ^version, workspace:~ → ~version, workspace:* → version
+        const prefix = depVersion.replace('workspace:', '');
+        pkg[depField][depName] = prefix === '*' ? resolvedVersion : `${prefix}${resolvedVersion}`;
+        console.log(`  Resolved ${depName}: "${depVersion}" → "${pkg[depField][depName]}"`);
+      }
+    }
+  }
+
+  fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n');
+  return original;
+}
+
+function restorePackageJson(directory, originalContent) {
+  const packageJsonPath = path.resolve(directory, 'package.json');
+  fs.writeFileSync(packageJsonPath, originalContent);
+}
+
 function checkIfVersionExists(packageName, version) {
   return new Promise((resolve, reject) => {
     exec(`npm view ${packageName}@${version} version`, (error, stdout, stderr) => {
@@ -134,15 +178,19 @@ async function publishPackages() {
   console.log(isDryRun ? 'DRY RUN MODE - No packages will be actually published' : '🚀 LIVE MODE - Packages will be published to npm');
   const otp = isDryRun ? null : useOtp ? await getOtp() : null;
 
+  const versionMap = buildWorkspaceVersionMap();
+  console.log('Workspace version map:', versionMap);
+
   const packageUpdates = [];
 
   // Process each level sequentially
   for (let level = 0; level < buildOrder.length; level++) {
     const levelPackages = buildOrder[level];
     console.log(`Processing Level ${level + 1}: ${levelPackages.join(', ')}`);
-    
+
     // Within each level, process packages in parallel
     const levelPromises = levelPackages.map(async (dir) => {
+      let originalPackageJson = null;
       try {
         console.log(`Processing ${dir}...`);
 
@@ -163,6 +211,10 @@ async function publishPackages() {
           await runCommand(dir, cmd);
         }
 
+        // Resolve workspace:^ references before publishing
+        console.log(`Resolving workspace references for ${packageName}...`);
+        originalPackageJson = resolveWorkspaceProtocol(dir, versionMap);
+
         // Handle npm publish separately to include OTP
         if (isDryRun) {
           console.log(`DRY RUN: Would publish ${packageName}@${packageVersion}`);
@@ -181,6 +233,12 @@ async function publishPackages() {
       } catch (error) {
         console.error(`Failed to process ${dir}:`, error.message);
         throw error; // Re-throw to fail the entire level
+      } finally {
+        // Always restore original package.json with workspace:^ references
+        if (originalPackageJson) {
+          restorePackageJson(dir, originalPackageJson);
+          console.log(`Restored original package.json for ${dir}`);
+        }
       }
     });
     
