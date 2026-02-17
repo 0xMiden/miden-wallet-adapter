@@ -27,6 +27,7 @@ import {
   type MidenSendTransaction,
   type MidenConsumeTransaction,
   type Asset,
+  type CreateAccountParams,
   type InputNoteDetails,
   type TransactionOutput,
 } from '@miden-sdk/miden-wallet-adapter-base';
@@ -65,6 +66,7 @@ export interface WalletContextState {
   waitForTransaction?: MessageSignerWalletAdapterProps['waitForTransaction'];
   requestSend?: MessageSignerWalletAdapterProps['requestSend'];
   requestConsume?: MessageSignerWalletAdapterProps['requestConsume'];
+  createAccount?: MessageSignerWalletAdapterProps['createAccount'];
 }
 
 const WalletContext = createContext<WalletContextState>({} as WalletContextState);
@@ -560,6 +562,19 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
     [adapter, handleError, connected]
   );
 
+  const createAccount:
+    | MessageSignerWalletAdapterProps['createAccount']
+    | undefined = useMemo(
+    () =>
+      adapter && 'createAccount' in adapter
+        ? async (params?: CreateAccountParams) => {
+            if (!connected) throw handleError(new WalletNotConnectedError());
+            return await adapter.createAccount(params);
+          }
+        : undefined,
+    [adapter, handleError, connected]
+  );
+
   // Build SignerContext value.
   //
   // CRITICAL: signerContext MUST be referentially stable.  MidenProvider's init
@@ -678,6 +693,7 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
       waitForTransaction,
       requestSend,
       requestConsume,
+      createAccount,
     }),
     [
       autoConnect,
@@ -700,6 +716,7 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
       waitForTransaction,
       requestSend,
       requestConsume,
+      createAccount,
     ]
   );
 

@@ -45,6 +45,9 @@ function createMockWallet(overrides: Record<string, any> = {}) {
     requestConsumableNotes: vi
       .fn()
       .mockResolvedValue({ consumableNotes: [{ noteId: 'cn1' }] }),
+    createAccount: vi
+      .fn()
+      .mockResolvedValue({ accountId: 'account-123' }),
     waitForTransaction: vi.fn(),
     ...overrides,
   };
@@ -144,6 +147,10 @@ describe('MidenWalletAdapter', () => {
         name: 'waitForTransaction',
         call: (a) => a.waitForTransaction('tx-1'),
       },
+      {
+        name: 'createAccount',
+        call: (a) => a.createAccount(),
+      },
     ];
 
     for (const { name, call } of methods) {
@@ -224,6 +231,33 @@ describe('MidenWalletAdapter', () => {
       const { adapter } = await createConnectedAdapter();
       const notes = await adapter.requestConsumableNotes();
       expect(notes).toEqual([{ noteId: 'cn1' }]);
+    });
+
+    it('createAccount returns accountId without params', async () => {
+      const { adapter, mockWallet } = await createConnectedAdapter();
+      const result = await adapter.createAccount();
+      expect(mockWallet.createAccount).toHaveBeenCalledWith(undefined);
+      expect(result).toBe('account-123');
+    });
+
+    it('createAccount returns accountId with params', async () => {
+      const { adapter, mockWallet } = await createConnectedAdapter();
+      const params = {
+        accountType: 'RegularAccountUpdatableCode' as const,
+        storageMode: 'private' as const,
+      };
+      const result = await adapter.createAccount(params);
+      expect(mockWallet.createAccount).toHaveBeenCalledWith(params);
+      expect(result).toBe('account-123');
+    });
+
+    it('createAccount passes customComponents to wallet', async () => {
+      const { adapter, mockWallet } = await createConnectedAdapter();
+      const component = new Uint8Array([1, 2, 3]);
+      const params = { customComponents: [component] };
+      const result = await adapter.createAccount(params);
+      expect(mockWallet.createAccount).toHaveBeenCalledWith(params);
+      expect(result).toBe('account-123');
     });
   });
 

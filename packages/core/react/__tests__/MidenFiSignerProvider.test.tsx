@@ -16,6 +16,7 @@ const createMockAdapter = (overrides = {}) => {
     connect: vi.fn().mockResolvedValue(undefined),
     disconnect: vi.fn().mockResolvedValue(undefined),
     signBytes: vi.fn().mockResolvedValue(new Uint8Array(67)),
+    createAccount: vi.fn().mockResolvedValue('account-123'),
     on: vi.fn((event: string, handler: Function) => {
       if (!listeners[event]) listeners[event] = [];
       listeners[event].push(handler);
@@ -306,6 +307,16 @@ describe('MidenFiSignerProvider', () => {
       });
 
       expect(result.current.autoConnect).toBe(false);
+    });
+
+    it('exposes createAccount from adapter', () => {
+      const { result } = renderHook(() => useMidenFiWallet(), {
+        wrapper: ({ children }) => (
+          <MidenFiSignerProvider>{children}</MidenFiSignerProvider>
+        ),
+      });
+
+      expect(result.current.createAccount).toBeDefined();
     });
   });
 
