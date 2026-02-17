@@ -30,7 +30,7 @@ import {
   type InputNoteDetails,
   type TransactionOutput,
 } from '@miden-sdk/miden-wallet-adapter-base';
-import type { NoteFilterTypes } from '@miden-sdk/miden-sdk';
+import type { NoteFilterTypes, AccountComponent } from '@miden-sdk/miden-sdk';
 import { MidenWalletAdapter } from '@miden-sdk/miden-wallet-adapter-miden';
 import { useLocalStorage } from './useLocalStorage';
 
@@ -72,6 +72,12 @@ const WalletContext = createContext<WalletContextState>({} as WalletContextState
 // MIDENFI SIGNER PROVIDER
 // ================================================================================================
 
+export type SignerAccountType =
+  | 'RegularAccountImmutableCode'
+  | 'RegularAccountUpdatableCode'
+  | 'FungibleFaucet'
+  | 'NonFungibleFaucet';
+
 export interface MidenFiSignerProviderProps {
   children: ReactNode;
   /** Wallet adapters to use. Defaults to [MidenWalletAdapter] */
@@ -90,6 +96,12 @@ export interface MidenFiSignerProviderProps {
   onError?: (error: WalletError) => void;
   /** LocalStorage key for persisting wallet selection */
   localStorageKey?: string;
+  /** Account type for the signer account. Defaults to 'RegularAccountImmutableCode' */
+  accountType?: SignerAccountType;
+  /** Storage mode for the signer account ('private' | 'public' | 'network'). Defaults to 'public' */
+  storageMode?: 'private' | 'public' | 'network';
+  /** Custom account components to include in the account (e.g. from a compiled .masp package) */
+  customComponents?: AccountComponent[];
 }
 
 const initialState: {
@@ -162,6 +174,9 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
   allowedPrivateData = AllowedPrivateData.None,
   onError,
   localStorageKey = 'walletName',
+  accountType = 'RegularAccountImmutableCode',
+  storageMode = 'public',
+  customComponents,
 }) => {
   // Create default wallets if not provided
   const adapters = useMemo(
@@ -579,8 +594,6 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
 
   // The connected context ref — reused across renders to maintain referential identity.
   const connectedCtxRef = useRef<SignerContextValue | null>(null);
-  // Track which address the connected context was built for.
-  const connectedAddressRef = useRef<string | null>(null);
 
   const [signerContext, setSignerContext] = useState<SignerContextValue>(
     disconnectedCtx.current
@@ -594,14 +607,8 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
         // Already disconnected — don't set state again (same ref = no re-render).
         if (connectedCtxRef.current !== null) {
           connectedCtxRef.current = null;
-          connectedAddressRef.current = null;
           setSignerContext(disconnectedCtx.current);
         }
-        return;
-      }
-
-      // Already built for this address — reuse existing context (same ref).
-      if (connectedCtxRef.current && connectedAddressRef.current === address) {
         return;
       }
 
@@ -614,12 +621,15 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
             return result;
           };
 
+          const resolvedStorageMode = AccountStorageMode.tryFromStr(storageMode);
+
           const ctx: SignerContextValue = {
             signCb,
             accountConfig: {
               publicKeyCommitment: publicKey,
-              accountType: 'RegularAccountImmutableCode',
-              storageMode: AccountStorageMode.public(),
+              accountType,
+              storageMode: resolvedStorageMode,
+              ...(customComponents?.length ? { customComponents } : {}),
             },
             storeName: `midenfi_${address}`,
             name: 'MidenFi',
@@ -629,14 +639,12 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
           };
 
           connectedCtxRef.current = ctx;
-          connectedAddressRef.current = address;
           setSignerContext(ctx);
         }
       } catch (error) {
         console.error('Failed to build MidenFi signer context:', error);
         if (!cancelled) {
           connectedCtxRef.current = null;
-          connectedAddressRef.current = null;
           setSignerContext(disconnectedCtx.current);
         }
       }
@@ -646,7 +654,7 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
     return () => {
       cancelled = true;
     };
-  }, [connected, publicKey, address]);
+  }, [connected, publicKey, address, accountType, storageMode, customComponents]);
 
   const walletContextValue = useMemo(
     () => ({

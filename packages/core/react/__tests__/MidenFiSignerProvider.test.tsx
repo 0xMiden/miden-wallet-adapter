@@ -52,6 +52,7 @@ vi.mock('@miden-sdk/miden-sdk', () => ({
   AccountStorageMode: {
     public: vi.fn(() => ({ toString: () => 'public' })),
     private: vi.fn(() => ({ toString: () => 'private' })),
+    tryFromStr: vi.fn((s: string) => ({ toString: () => s })),
   },
 }));
 
@@ -386,6 +387,138 @@ describe('MidenFiSignerProvider', () => {
         expect(capturedContext.accountConfig.accountType).toBe(
           'RegularAccountImmutableCode'
         );
+      }
+    });
+
+    it('uses custom accountType when provided', async () => {
+      mockAdapter = createMockAdapter({
+        connected: true,
+        publicKey: new Uint8Array(32).fill(0x42),
+        address: '0xtest-address',
+        readyState: 'Installed',
+      });
+
+      let capturedContext: any = null;
+      const TestConsumer = () => {
+        const context = React.useContext(SignerContext);
+        capturedContext = context;
+        return null;
+      };
+
+      render(
+        <MidenFiSignerProvider accountType="RegularAccountUpdatableCode">
+          <TestConsumer />
+        </MidenFiSignerProvider>
+      );
+
+      await act(async () => {
+        await flushPromises();
+        await flushPromises();
+        await flushPromises();
+      });
+
+      if (capturedContext?.accountConfig) {
+        expect(capturedContext.accountConfig.accountType).toBe(
+          'RegularAccountUpdatableCode'
+        );
+      }
+    });
+
+    it('uses custom storageMode when provided', async () => {
+      mockAdapter = createMockAdapter({
+        connected: true,
+        publicKey: new Uint8Array(32).fill(0x42),
+        address: '0xtest-address',
+        readyState: 'Installed',
+      });
+
+      let capturedContext: any = null;
+      const TestConsumer = () => {
+        const context = React.useContext(SignerContext);
+        capturedContext = context;
+        return null;
+      };
+
+      render(
+        <MidenFiSignerProvider storageMode="private">
+          <TestConsumer />
+        </MidenFiSignerProvider>
+      );
+
+      await act(async () => {
+        await flushPromises();
+        await flushPromises();
+        await flushPromises();
+      });
+
+      if (capturedContext?.accountConfig) {
+        expect(capturedContext.accountConfig.storageMode.toString()).toBe('private');
+      }
+    });
+
+    it('includes customComponents in accountConfig when provided', async () => {
+      mockAdapter = createMockAdapter({
+        connected: true,
+        publicKey: new Uint8Array(32).fill(0x42),
+        address: '0xtest-address',
+        readyState: 'Installed',
+      });
+
+      const mockComponent = { name: 'test-component' } as any;
+
+      let capturedContext: any = null;
+      const TestConsumer = () => {
+        const context = React.useContext(SignerContext);
+        capturedContext = context;
+        return null;
+      };
+
+      render(
+        <MidenFiSignerProvider customComponents={[mockComponent]}>
+          <TestConsumer />
+        </MidenFiSignerProvider>
+      );
+
+      await act(async () => {
+        await flushPromises();
+        await flushPromises();
+        await flushPromises();
+      });
+
+      if (capturedContext?.accountConfig) {
+        expect(capturedContext.accountConfig.customComponents).toEqual([mockComponent]);
+      }
+    });
+
+    it('does not include customComponents when not provided', async () => {
+      mockAdapter = createMockAdapter({
+        connected: true,
+        publicKey: new Uint8Array(32).fill(0x42),
+        address: '0xtest-address',
+        readyState: 'Installed',
+      });
+
+      let capturedContext: any = null;
+      const TestConsumer = () => {
+        const context = React.useContext(SignerContext);
+        capturedContext = context;
+        return null;
+      };
+
+      render(
+        <MidenFiSignerProvider>
+          <TestConsumer />
+        </MidenFiSignerProvider>
+      );
+
+      await act(async () => {
+        await flushPromises();
+        await flushPromises();
+        await flushPromises();
+      });
+
+      if (capturedContext?.accountConfig) {
+        expect(capturedContext.accountConfig.customComponents).toBeUndefined();
       }
     });
   });
