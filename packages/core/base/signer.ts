@@ -6,7 +6,7 @@ import {
   MidenSendTransaction,
   MidenTransaction,
 } from './transaction';
-import { Asset, InputNoteDetails, SignKind, TransactionOutput } from './types';
+import { Asset, CreateAccountParams, InputNoteDetails, SignKind, TransactionOutput } from './types';
 
 export type Adapter =
   | WalletAdapter
@@ -40,6 +40,7 @@ export interface MessageSignerWalletAdapterProps<Name extends string = string>
   ): Promise<TransactionOutput>;
   requestSend(transaction: MidenSendTransaction): Promise<string>;
   requestConsume(transaction: MidenConsumeTransaction): Promise<string>;
+  createAccount(params?: CreateAccountParams): Promise<string>;
 }
 
 export type MessageSignerWalletAdapter<Name extends string = string> =
@@ -68,4 +69,5 @@ export abstract class BaseMessageSignerWalletAdapter<
     txId: string,
     timeout?: number
   ): Promise<TransactionOutput>;
+  abstract createAccount(params?: CreateAccountParams): Promise<string>;
 }

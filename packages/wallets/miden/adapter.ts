@@ -18,6 +18,7 @@ import {
   MidenConsumeTransaction,
   WalletTransactionError,
   Asset,
+  CreateAccountParams,
   InputNoteDetails,
   TransactionOutput,
   WalletTransactionOutput,
@@ -59,6 +60,7 @@ export interface MidenWallet extends EventEmitter<MidenWalletEvents> {
   ): Promise<{ signature: Uint8Array }>;
   importPrivateNote(note: Uint8Array): Promise<{ noteId: string }>;
   requestConsumableNotes(): Promise<{ consumableNotes: InputNoteDetails[] }>;
+  createAccount(params?: CreateAccountParams): Promise<{ accountId: string }>;
   connect(
     privateDataPermission: PrivateDataPermission,
     network: WalletAdapterNetwork,
@@ -286,6 +288,22 @@ export class MidenWalletAdapter extends BaseMessageSignerWalletAdapter {
         txHash: result.txHash,
         outputNotes: notes,
       };
+    } catch (error: any) {
+      this.emit('error', error);
+      throw error;
+    }
+  }
+
+  async createAccount(params?: CreateAccountParams): Promise<string> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet || !this.address) throw new WalletNotConnectedError();
+      try {
+        const result = await wallet.createAccount(params);
+        return result.accountId;
+      } catch (error: any) {
+        throw new WalletTransactionError(error?.message, error);
+      }
     } catch (error: any) {
       this.emit('error', error);
       throw error;

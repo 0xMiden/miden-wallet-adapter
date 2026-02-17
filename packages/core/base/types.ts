@@ -66,3 +66,15 @@ export interface WalletTransactionSuccessOutput {
 export type WalletTransactionOutput =
   | WalletTransactionSuccessOutput
   | IFailedTransactionOutput;
+
+export type CreateAccountType =
+  | 'RegularAccountImmutableCode'
+  | 'RegularAccountUpdatableCode';
+
+export type CreateAccountStorageMode = 'private' | 'public' | 'network';
+
+export interface CreateAccountParams {
+  accountType?: CreateAccountType;
+  storageMode?: CreateAccountStorageMode;
+  customComponents?: Uint8Array[];
+}
