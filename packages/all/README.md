@@ -165,6 +165,104 @@ function AssetsAndNotesComponent() {
 }
 ```
 
+## MidenFiSignerProvider
+
+`MidenFiSignerProvider` is a higher-level alternative to `WalletProvider` that integrates the wallet adapter directly with `MidenProvider` from `@miden-sdk/react`. It automatically creates and manages a Miden signer account using the connected wallet's keys, and exposes it to the `@miden-sdk/react` hooks (`useSigner`, `useMiden`, etc.).
+
+### Basic setup
+
+```tsx
+import { MidenFiSignerProvider } from '@miden-sdk/miden-wallet-adapter-react';
+import { WalletAdapterNetwork } from '@miden-sdk/miden-wallet-adapter-base';
+import { MidenProvider } from '@miden-sdk/react';
+
+function App() {
+  return (
+    <MidenFiSignerProvider
+      appName="My Miden dApp"
+      network={WalletAdapterNetwork.Testnet}
+    >
+      <MidenProvider config={{ rpcUrl: 'testnet' }}>
+        <YourApp />
+      </MidenProvider>
+    </MidenFiSignerProvider>
+  );
+}
+```
+
+### Account type and storage mode
+
+```tsx
+<MidenFiSignerProvider
+  appName="My Miden dApp"
+  accountType="RegularAccountImmutableCode"
+  storageMode="public"
+>
+  ...
+</MidenFiSignerProvider>
+```
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `accountType` | `SignerAccountType` | `'RegularAccountImmutableCode'` | The type of on-chain signer account to create |
+| `storageMode` | `'private' \| 'public' \| 'network'` | `'public'` | Where the account state is stored |
+
+### Custom account components
+
+Pass `customComponents` to attach custom on-chain logic — compiled from `.masp` (Miden Assembly Package) files — to the signer account at creation time.
+
+```tsx
+import type { AccountComponent } from '@miden-sdk/miden-sdk';
+import { myComponent } from '@myorg/my-masp-package'; // compiled AccountComponent
+
+function App() {
+  return (
+    <MidenFiSignerProvider
+      appName="My Miden dApp"
+      accountType="RegularAccountImmutableCode"
+      storageMode="public"
+      customComponents={[myComponent]}
+    >
+      <MidenProvider config={{ rpcUrl: 'testnet' }}>
+        <YourApp />
+      </MidenProvider>
+    </MidenFiSignerProvider>
+  );
+}
+```
+
+`customComponents` is only applied during account creation. Changing the prop after the account exists has no effect on the deployed account. If the array is empty or omitted, the account is created with default components only.
+
+### Props reference
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `appName` | `string` | — | App name passed to the default wallet adapter |
+| `wallets` | `Adapter[]` | `[MidenWalletAdapter]` | Wallet adapters to use |
+| `network` | `WalletAdapterNetwork` | — | Network to connect to |
+| `autoConnect` | `boolean` | `true` | Auto-connect to previously selected wallet on mount |
+| `accountType` | `SignerAccountType` | `'RegularAccountImmutableCode'` | Type of signer account to create |
+| `storageMode` | `'private' \| 'public' \| 'network'` | `'public'` | Account storage mode |
+| `customComponents` | `AccountComponent[]` | — | Custom components from a compiled `.masp` package |
+| `onError` | `(error: WalletError) => void` | — | Error handler |
+| `localStorageKey` | `string` | — | Key for persisting wallet selection |
+
+### Accessing signer and wallet state
+
+```tsx
+import { useMidenFiWallet } from '@miden-sdk/miden-wallet-adapter-react';
+import { useMiden, useSigner } from '@miden-sdk/react';
+
+function WalletStatus() {
+  const { connected, address, connect, disconnect } = useMidenFiWallet();
+  const { isReady, signerAccountId } = useMiden();
+
+  return connected
+    ? <button onClick={disconnect}>Disconnect ({address})</button>
+    : <button onClick={connect}>Connect Wallet</button>;
+}
+```
+
 ## UI Components
 
 The package includes several pre-built React components:

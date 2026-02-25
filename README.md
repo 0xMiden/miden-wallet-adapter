@@ -156,6 +156,92 @@ require('@miden-sdk/miden-wallet-adapter/styles.css');
 import '@miden-sdk/miden-wallet-adapter/styles.css';
 ```
 
+## MidenFiSignerProvider
+
+`MidenFiSignerProvider` is a higher-level React provider that bridges the wallet adapter with `MidenProvider` from `@miden-sdk/react`. It handles signer account creation and management automatically using the connected wallet's keys.
+
+### Basic setup
+
+```tsx
+import { MidenFiSignerProvider } from '@miden-sdk/miden-wallet-adapter-react';
+import { WalletAdapterNetwork } from '@miden-sdk/miden-wallet-adapter-base';
+import { MidenProvider } from '@miden-sdk/react';
+
+function App() {
+  return (
+    <MidenFiSignerProvider
+      appName="My Miden dApp"
+      network={WalletAdapterNetwork.Testnet}
+    >
+      <MidenProvider config={{ rpcUrl: 'testnet' }}>
+        <YourApp />
+      </MidenProvider>
+    </MidenFiSignerProvider>
+  );
+}
+```
+
+### Account type and storage mode
+
+Use `accountType` and `storageMode` to control how the signer account is created on-chain:
+
+```tsx
+<MidenFiSignerProvider
+  appName="My Miden dApp"
+  accountType="RegularAccountImmutableCode"
+  storageMode="public"
+>
+  ...
+</MidenFiSignerProvider>
+```
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `accountType` | `SignerAccountType` | `'RegularAccountImmutableCode'` | The type of on-chain signer account to create |
+| `storageMode` | `'private' \| 'public' \| 'network'` | `'public'` | Where the account state is stored |
+
+### Custom account components
+
+The `customComponents` prop attaches custom logic to the signer account. Components are compiled from `.masp` (Miden Assembly Package) files and passed as `AccountComponent` objects from `@miden-sdk/miden-sdk`.
+
+```tsx
+import type { AccountComponent } from '@miden-sdk/miden-sdk';
+import { myComponent } from '@myorg/my-masp-package'; // compiled AccountComponent
+
+function App() {
+  return (
+    <MidenFiSignerProvider
+      appName="My Miden dApp"
+      accountType="RegularAccountImmutableCode"
+      storageMode="public"
+      customComponents={[myComponent]}
+    >
+      <MidenProvider config={{ rpcUrl: 'testnet' }}>
+        <YourApp />
+      </MidenProvider>
+    </MidenFiSignerProvider>
+  );
+}
+```
+
+`customComponents` is applied when the signer account is first created. If the array is empty or not provided, the account is created with default components only. Components are stable across re-renders — only create new `AccountComponent` instances when the desired account logic changes.
+
+### Accessing signer state
+
+Use the `useMidenFiWallet` hook inside the provider to read wallet and signer state:
+
+```tsx
+import { useMidenFiWallet } from '@miden-sdk/miden-wallet-adapter-react';
+
+function WalletStatus() {
+  const { connected, address, connect, disconnect } = useMidenFiWallet();
+
+  return connected
+    ? <button onClick={disconnect}>Disconnect ({address})</button>
+    : <button onClick={connect}>Connect Wallet</button>;
+}
+```
+
 ## Architecture & Structure
 
 ### **Main Package**: `@miden-sdk/miden-wallet-adapter`

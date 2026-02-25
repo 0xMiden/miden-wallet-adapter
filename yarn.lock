@@ -732,7 +732,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@miden-sdk/miden-sdk@npm:0.13.0, @miden-sdk/miden-sdk@npm:^0.13.0":
+"@miden-sdk/miden-sdk@npm:0.13.0":
   version: 0.13.0
   resolution: "@miden-sdk/miden-sdk@npm:0.13.0"
   dependencies:
@@ -740,6 +740,17 @@ __metadata:
     dexie: "npm:^4.0.1"
     glob: "npm:^11.0.0"
   checksum: 10c0/13c5e5ac38ed69bd7d6399deda776b678670757fe10a3eb3f583155a18d19a29a63c161d470c7cdf9d4104c04af38f67d2e276f9d6f563be0dce2a9fd7be1e1c
+  languageName: node
+  linkType: hard
+
+"@miden-sdk/miden-sdk@npm:^0.13.1":
+  version: 0.13.1
+  resolution: "@miden-sdk/miden-sdk@npm:0.13.1"
+  dependencies:
+    "@rollup/plugin-typescript": "npm:^12.3.0"
+    dexie: "npm:^4.0.1"
+    glob: "npm:^11.0.0"
+  checksum: 10c0/98c0ea691c1cc6544eb907ed3ee2758167d7dcd4f20d33e757ba9416eb8d6c73e59a0df03c466aa8a2dd63832364a9e85958ea47bb38d632185beed289cdadf7
   languageName: node
   linkType: hard
 
@@ -770,17 +781,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@miden-sdk/miden-wallet-adapter-react@workspace:packages/core/react"
   dependencies:
-    "@miden-sdk/miden-sdk": "npm:^0.13.0"
+    "@miden-sdk/miden-sdk": "npm:^0.13.1"
     "@miden-sdk/miden-wallet-adapter-base": "workspace:^"
     "@miden-sdk/miden-wallet-adapter-miden": "workspace:^"
-    "@miden-sdk/react": "npm:^0.13.0"
+    "@miden-sdk/react": "npm:^0.13.3"
     "@testing-library/react": "npm:^14.0.0"
     jsdom: "npm:^24.0.0"
     react: "npm:^19.1.1"
     react-dom: "npm:^19.1.1"
     vitest: "npm:^1.0.0"
   peerDependencies:
-    "@miden-sdk/react": ^0.13.0
+    "@miden-sdk/react": ^0.13.3
     react: ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@miden-sdk/react":
@@ -826,15 +837,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@miden-sdk/react@npm:^0.13.0, @miden-sdk/react@npm:^0.13.1":
-  version: 0.13.1
-  resolution: "@miden-sdk/react@npm:0.13.1"
+"@miden-sdk/react@npm:^0.13.3":
+  version: 0.13.3
+  resolution: "@miden-sdk/react@npm:0.13.3"
   dependencies:
     zustand: "npm:^5.0.0"
   peerDependencies:
     "@miden-sdk/miden-sdk": ^0.13.0
     react: ">=18.0.0"
-  checksum: 10c0/bc3a32482500523751ca02c487520be8a37014906b0c2a9e274c6906322cc1e6847b3147359a2e1f7cedfd888071252d2e2c8cba8cb6665fa6cedaa4021a9ca4
+  checksum: 10c0/7720b5656172d371c97e7728653790efcd8a1759d12161eea355ab9e164f2d75838816722b97f647a097d27a8c3b84b06924a4dd2bba1f7af191f0e9b236fb59
   languageName: node
   linkType: hard
 
@@ -4389,11 +4400,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-signer-example@workspace:examples/react-signer"
   dependencies:
-    "@miden-sdk/miden-sdk": "npm:^0.13.0"
+    "@miden-sdk/miden-sdk": "npm:^0.13.1"
     "@miden-sdk/miden-wallet-adapter-base": "workspace:^"
     "@miden-sdk/miden-wallet-adapter-miden": "workspace:^"
     "@miden-sdk/miden-wallet-adapter-react": "workspace:^"
-    "@miden-sdk/react": "npm:^0.13.1"
+    "@miden-sdk/react": "npm:^0.13.3"
     "@types/react": "npm:^19.2.0"
     "@types/react-dom": "npm:^19.2.0"
     "@vitejs/plugin-react": "npm:^5.1.1"
