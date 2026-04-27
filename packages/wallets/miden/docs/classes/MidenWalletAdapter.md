@@ -64,7 +64,7 @@
 
 ### url
 
-> **url**: `string` = `'https://miden.fi/'`
+> **url**: `string` = `'https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb'`
 
 #### Overrides
 
@@ -247,6 +247,26 @@
 #### Overrides
 
 `BaseMessageSignerWalletAdapter.connect`
+
+***
+
+### createAccount()
+
+> **createAccount**(`params?`): `Promise`\<`string`\>
+
+#### Parameters
+
+##### params?
+
+`CreateAccountParams`
+
+#### Returns
+
+`Promise`\<`string`\>
+
+#### Overrides
+
+`BaseMessageSignerWalletAdapter.createAccount`
 
 ***
 

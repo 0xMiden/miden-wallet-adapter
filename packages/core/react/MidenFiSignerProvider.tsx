@@ -549,6 +549,25 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
     [adapter, connected]
   );
 
+  // Pattern B: fetch the connected account's serialized AccountFile so the
+  // SDK can adopt the wallet's account ID locally without re-deriving a
+  // different one from publicKeyCommitment. Required for unfunded public
+  // accounts (chain has no state yet) and private accounts (chain never has
+  // state). Optional on the adapter; null when not granted.
+  const requestAccountFile:
+    | (() => Promise<Uint8Array | null>)
+    | undefined = useMemo(
+    () =>
+      adapter && 'requestAccountFile' in adapter &&
+      typeof (adapter as any).requestAccountFile === 'function'
+        ? async () => {
+            if (!connected) return null;
+            return await (adapter as any).requestAccountFile();
+          }
+        : undefined,
+    [adapter, connected]
+  );
+
   const waitForTransaction:
     | MessageSignerWalletAdapterProps['waitForTransaction']
     | undefined = useMemo(
@@ -628,6 +647,10 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
   useEffect(() => {
     requestPrivateNoteBytesRef.current = requestPrivateNoteBytes;
   }, [requestPrivateNoteBytes]);
+  const requestAccountFileRef = useRef(requestAccountFile);
+  useEffect(() => {
+    requestAccountFileRef.current = requestAccountFile;
+  }, [requestAccountFile]);
 
   const disconnectedCtx = useRef<SignerContextValue>({
     signCb: async () => { throw new Error('MidenFi wallet not connected'); },
@@ -742,22 +765,46 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
 
           const resolvedStorageMode = AccountStorageMode.tryFromStr(storageMode);
 
-          // Pass `importAccountId` only when the consumer explicitly provided
-          // one (e.g. to pin to a specific non-default wallet account). When
-          // unset, `@miden-sdk/react`'s `initializeSignerAccount` takes the
-          // build-from-publicKeyCommitment slow path and silently swallows
-          // "not found on the network" — which is the right behaviour for a
-          // wallet account that hasn't transacted yet (public-storage Miden
-          // accounts are only visible on chain after their first tx).
+          // Default `importAccountId` to the connected wallet's `address`.
+          // The MidenFi wallet IS the source of truth for the user's account
+          // ID; building one locally from `publicKeyCommitment` derives a
+          // DIFFERENT ID (random seed + auth component != MidenFi's account
+          // construction), which silently desyncs the dApp from the wallet.
+          // The consumer-supplied `importAccountId` prop wins when present,
+          // for callers that want to pin a specific non-default account.
           //
-          // Historical note: PR #81 (afe11d6) used to *always* set
-          // `importAccountId` because the slow path tripped a broken
-          // `AuthScheme.AuthEcdsaK256Keccak` lookup on `@miden-sdk/react`
-          // <= 0.14.4. That bug is fixed on HEAD (>= 0.14.5; see
-          // miden-client#2088 "expose resolveAuthScheme and fix external-
-          // keystore init"), and Pattern B's peer-dep bumps the SDK floor to
-          // 0.14.5 — so the workaround is no longer needed and was actively
-          // harmful for not-yet-published wallet accounts.
+          // Fetch the AccountFile bytes once at connect time so the SDK can
+          // adopt unfunded-public and private accounts (chain has nothing to
+          // import). The SDK's `initializeSignerAccount` prefers
+          // `importAccountById` for funded public accounts (freshest state)
+          // and falls back to `importAccountFile(bytes)` when chain returns
+          // "not found". `null` from the adapter is fine — the SDK just
+          // won't have a fallback (older wallet builds, or no Auto+Notes
+          // permission yet). Failures here are best-effort.
+          //
+          // PARTIAL GAP: this is a one-shot fetch. Private-storage accounts
+          // whose state changes in the wallet (after a wallet-side tx)
+          // won't propagate to the dApp until the dApp reconnects, because
+          // `client.accounts.import({ file })` has no `overwrite` option in
+          // the WASM API today — re-pushing on each ingestState tick would
+          // hit "already being tracked". Closing this needs either an
+          // `overwrite` flag on the import API or an `accounts.update`
+          // endpoint on the WASM client. For public accounts, RPC sync
+          // covers post-connect state changes — no gap.
+          let accountFileBytes: Uint8Array | null = null;
+          const reqAccountFile = requestAccountFileRef.current;
+          if (reqAccountFile) {
+            try {
+              accountFileBytes = await reqAccountFile();
+            } catch (err) {
+              console.warn(
+                '[MidenFiSigner] requestAccountFile failed:',
+                err
+              );
+            }
+            if (cancelled) return;
+          }
+
           const ctx: SignerContextValue = {
             signCb,
             accountConfig: {
@@ -765,7 +812,8 @@ export const MidenFiSignerProvider: FC<MidenFiSignerProviderProps> = ({
               accountType,
               storageMode: resolvedStorageMode,
               ...(customComponents?.length ? { customComponents } : {}),
-              ...(importAccountId ? { importAccountId } : {}),
+              importAccountId: importAccountId ?? address,
+              ...(accountFileBytes ? { accountFileBytes } : {}),
             },
             storeName: `midenfi_${address}`,
             name: 'MidenFi',

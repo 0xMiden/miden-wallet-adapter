@@ -32,6 +32,22 @@
 
 ***
 
+### createAccount()?
+
+> `optional` **createAccount**: (`params?`) => `Promise`\<`string`\>
+
+#### Parameters
+
+##### params?
+
+`CreateAccountParams`
+
+#### Returns
+
+`Promise`\<`string`\>
+
+***
+
 ### disconnecting
 
 > **disconnecting**: `boolean`

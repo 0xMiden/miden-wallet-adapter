@@ -64,6 +64,10 @@ export interface MidenWallet extends EventEmitter<MidenWalletEvents> {
   // Returns base64-encoded NoteFile.serialize() bytes for the user's private
   // notes. Silent: returns empty array if dApp lacks Auto+Notes permission.
   requestPrivateNoteBytes?(noteIds?: string[]): Promise<{ bytes: string[] }>;
+  // Optional — only present on wallet builds that support Pattern B account
+  // bootstrap. Returns base64-encoded AccountFile.serialize() bytes for the
+  // connected account, or null if dApp lacks Auto+Notes permission.
+  requestAccountFile?(): Promise<{ bytes: string | null }>;
   createAccount(params?: CreateAccountParams): Promise<{ accountId: string }>;
   connect(
     privateDataPermission: PrivateDataPermission,
@@ -293,6 +297,29 @@ export class MidenWalletAdapter extends BaseMessageSignerWalletAdapter {
       // Still emit for diagnostics.
       this.emit('error', error);
       return [];
+    }
+  }
+
+  async requestAccountFile(): Promise<Uint8Array | null> {
+    // Capability gate: returns null if the wallet build doesn't support this
+    // method. Mirrors `requestPrivateNoteBytes` shape — the React adapter
+    // also guards on capability presence before invoking, but this defensive
+    // check keeps the adapter usable from non-React consumers too.
+    const wallet = this._wallet;
+    if (!wallet || !this.address) throw new WalletNotConnectedError();
+    if (typeof wallet.requestAccountFile !== 'function') {
+      return null;
+    }
+    try {
+      const result = await wallet.requestAccountFile();
+      // Wallet returns base64-encoded AccountFile.serialize() bytes, or null
+      // when permission isn't granted. Decode via the shared helper.
+      return result.bytes != null ? b64ToU8(result.bytes) : null;
+    } catch (error: any) {
+      // Silent contract: caller (signer-context bootstrap) treats failures
+      // as best-effort. Still emit for diagnostics.
+      this.emit('error', error);
+      return null;
     }
   }
 

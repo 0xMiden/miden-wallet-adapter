@@ -8,6 +8,14 @@
 
 ## Properties
 
+### accountType?
+
+> `optional` **accountType**: [`SignerAccountType`](../type-aliases/SignerAccountType.md)
+
+Account type for the signer account. Defaults to 'RegularAccountImmutableCode'
+
+***
+
 ### allowedPrivateData?
 
 > `optional` **allowedPrivateData**: `AllowedPrivateData`
@@ -28,13 +36,29 @@ App name passed to the default MidenWalletAdapter
 
 > `optional` **autoConnect**: `boolean`
 
-Auto-connect to previously selected wallet on mount. Defaults to true
+Auto-connect to previously selected wallet on mount. Defaults to false
 
 ***
 
 ### children
 
 > **children**: `ReactNode`
+
+***
+
+### customComponents?
+
+> `optional` **customComponents**: `AccountComponent`[]
+
+Custom account components to include in the account (e.g. from a compiled .masp package)
+
+***
+
+### importAccountId?
+
+> `optional` **importAccountId**: `string`
+
+Existing account ID to import instead of creating a new account
 
 ***
 
@@ -77,6 +101,14 @@ Error handler
 > `optional` **privateDataPermission**: `PrivateDataPermission`
 
 Private data permission level
+
+***
+
+### storageMode?
+
+> `optional` **storageMode**: `"private"` \| `"public"` \| `"network"`
+
+Storage mode for the signer account ('private' | 'public' | 'network'). Defaults to 'public'
 
 ***
 

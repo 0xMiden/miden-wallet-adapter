@@ -251,6 +251,26 @@ Minimal `EventEmitter` interface that is molded against the Node.js
 
 ***
 
+### createAccount()
+
+> `abstract` **createAccount**(`params?`): `Promise`\<`string`\>
+
+#### Parameters
+
+##### params?
+
+[`CreateAccountParams`](../interfaces/CreateAccountParams.md)
+
+#### Returns
+
+`Promise`\<`string`\>
+
+#### Implementation of
+
+`MessageSignerWalletAdapter.createAccount`
+
+***
+
 ### disconnect()
 
 > `abstract` **disconnect**(): `Promise`\<`void`\>

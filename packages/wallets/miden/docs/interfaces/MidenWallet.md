@@ -82,6 +82,22 @@
 
 ***
 
+### createAccount()
+
+> **createAccount**(`params?`): `Promise`\<\{ `accountId`: `string`; \}\>
+
+#### Parameters
+
+##### params?
+
+`CreateAccountParams`
+
+#### Returns
+
+`Promise`\<\{ `accountId`: `string`; \}\>
+
+***
+
 ### disconnect()
 
 > **disconnect**(): `Promise`\<`void`\>

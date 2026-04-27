@@ -51,6 +51,24 @@ export interface MessageSignerWalletAdapterProps<Name extends string = string>
    * adapter guards on capability presence before invoking.
    */
   requestPrivateNoteBytes?(noteIds?: string[]): Promise<Uint8Array[]>;
+  /**
+   * Return serialized AccountFile bytes (`AccountFile.serialize()` output)
+   * for the connected account. Used by the React adapter's signer
+   * bootstrap so the dApp's local MidenClient can adopt the wallet's
+   * account ID without re-deriving a different one — necessary for
+   * unfunded public accounts (chain has no state yet) and for private
+   * accounts (chain never has state).
+   *
+   * IMPORTANT: this method MUST be silent — never prompt the user. If the
+   * dApp does not yet hold the necessary permission, return `null` (NOT
+   * an error). Permission elevation flows through `requestPrivateNotes`,
+   * which IS allowed to prompt — Pattern B reuses that grant as the
+   * single "trust this dApp with my private state" gesture.
+   *
+   * Optional — adapters that don't manage account state may omit. The
+   * React adapter guards on capability presence.
+   */
+  requestAccountFile?(): Promise<Uint8Array | null>;
   waitForTransaction(
     txId: string,
     timeout?: number

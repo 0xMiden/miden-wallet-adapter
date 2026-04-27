@@ -53,6 +53,7 @@
 ## Interfaces
 
 - [Asset](interfaces/Asset.md)
+- [CreateAccountParams](interfaces/CreateAccountParams.md)
 - [IFailedTransactionOutput](interfaces/IFailedTransactionOutput.md)
 - [MessageSignerWalletAdapterProps](interfaces/MessageSignerWalletAdapterProps.md)
 - [MidenConsumeTransaction](interfaces/MidenConsumeTransaction.md)
@@ -68,6 +69,8 @@
 ## Type Aliases
 
 - [Adapter](type-aliases/Adapter.md)
+- [CreateAccountStorageMode](type-aliases/CreateAccountStorageMode.md)
+- [CreateAccountType](type-aliases/CreateAccountType.md)
 - [FungibleAssetDetails](type-aliases/FungibleAssetDetails.md)
 - [InputNoteDetails](type-aliases/InputNoteDetails.md)
 - [MessageSignerWalletAdapter](type-aliases/MessageSignerWalletAdapter.md)

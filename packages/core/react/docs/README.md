@@ -11,6 +11,10 @@
 - [WalletContextState](interfaces/WalletContextState.md)
 - [WalletProviderProps](interfaces/WalletProviderProps.md)
 
+## Type Aliases
+
+- [SignerAccountType](type-aliases/SignerAccountType.md)
+
 ## Variables
 
 - [MidenFiSignerProvider](variables/MidenFiSignerProvider.md)
